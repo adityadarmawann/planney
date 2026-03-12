@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/budget_provider.dart';
@@ -51,12 +51,12 @@ class _BudgetDetailScreenState extends State<BudgetDetailScreen> {
       appBar: AppBar(
         title: Text(budget.name),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.add),
+            icon: Icon(Icons.add),
             onPressed: () => _showAddItemSheet(context),
           ),
         ],
@@ -73,7 +73,7 @@ class _BudgetDetailScreenState extends State<BudgetDetailScreen> {
                   children: [
                     // Summary card
                     SpCard(
-                      color: AppColors.primaryLightest,
+                      color: AppColors.secondaryLight.withValues(alpha: 0.2),
                       hasBorder: false,
                       child: Column(
                         children: [
@@ -97,7 +97,7 @@ class _BudgetDetailScreenState extends State<BudgetDetailScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text('Sisa Anggaran',
+                              Text('Sisa Anggaran',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600)),
                               Text(
@@ -106,7 +106,7 @@ class _BudgetDetailScreenState extends State<BudgetDetailScreen> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
                                   color: budget.remaining >= 0
-                                      ? AppColors.primary
+                                      ? AppColors.secondary
                                       : AppColors.error,
                                 ),
                               ),
@@ -118,7 +118,7 @@ class _BudgetDetailScreenState extends State<BudgetDetailScreen> {
                             child: LinearProgressIndicator(
                               value: budget.percentageUsed / 100,
                               backgroundColor:
-                                  AppColors.primary.withValues(alpha: 0.2),
+                                  AppColors.secondary.withValues(alpha: 0.2),
                               valueColor: AlwaysStoppedAnimation<Color>(
                                 budget.percentageUsed >= 90
                                     ? AppColors.error
@@ -132,8 +132,8 @@ class _BudgetDetailScreenState extends State<BudgetDetailScreen> {
                           const SizedBox(height: 4),
                           Text(
                             '${budget.percentageUsed.toStringAsFixed(0)}% dari anggaran terpakai',
-                            style: const TextStyle(
-                                color: AppColors.textSecondary, fontSize: 11),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 11),
                           ),
                         ],
                       ),
@@ -144,7 +144,7 @@ class _BudgetDetailScreenState extends State<BudgetDetailScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Grafik Anggaran',
+                          Text('Grafik Anggaran',
                               style: TextStyle(
                                   fontWeight: FontWeight.w600)),
                           const SizedBox(height: 16),
@@ -160,27 +160,27 @@ class _BudgetDetailScreenState extends State<BudgetDetailScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Daftar Item',
+                        Text('Daftar Item',
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w600)),
                         TextButton.icon(
                           onPressed: () => _showAddItemSheet(context),
-                          icon: const Icon(Icons.add, size: 16),
-                          label: const Text('Tambah'),
+                          icon: Icon(Icons.add, size: 16),
+                          label: Text('Tambah'),
                         ),
                       ],
                     ),
                     const SizedBox(height: 8),
                     if (provider.budgetItems.isEmpty)
                       SpCard(
-                        child: const Center(
+                        child: Center(
                           child: Padding(
                             padding: EdgeInsets.all(24),
                             child: Text(
                               'Belum ada item anggaran. Tap + untuk menambah.',
                               textAlign: TextAlign.center,
                               style:
-                                  TextStyle(color: AppColors.textSecondary),
+                                  TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                             ),
                           ),
                         ),
@@ -222,16 +222,16 @@ class _BudgetDetailScreenState extends State<BudgetDetailScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Hapus Item'),
-        content: const Text('Hapus item anggaran ini?'),
+        title: Text('Hapus Item'),
+        content: Text('Hapus item anggaran ini?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Batal'),
+            child: Text('Batal'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Hapus',
+            child: Text('Hapus',
                 style: TextStyle(color: AppColors.error)),
           ),
         ],
@@ -262,8 +262,8 @@ class _SummaryItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(label,
-              style: const TextStyle(
-                  color: AppColors.textSecondary, fontSize: 12)),
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 12)),
           const SizedBox(height: 4),
           Text(value,
               style: TextStyle(
@@ -312,7 +312,7 @@ class _ItemCard extends StatelessWidget {
             child: Text(
               category?.icon ??
                   (item.type == ItemType.income ? '💰' : '💸'),
-              style: const TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 20),
             ),
           ),
         ),
@@ -320,10 +320,10 @@ class _ItemCard extends StatelessWidget {
           item.description ??
               category?.name ??
               (item.type == ItemType.income ? 'Pemasukan' : 'Pengeluaran'),
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
         ),
         subtitle: Text(DateFormatter.formatDate(item.date),
-            style: const TextStyle(fontSize: 12)),
+            style: TextStyle(fontSize: 12)),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -338,7 +338,7 @@ class _ItemCard extends StatelessWidget {
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.delete_outline,
+              icon: Icon(Icons.delete_outline,
                   color: AppColors.error, size: 18),
               onPressed: onDelete,
             ),
@@ -432,7 +432,7 @@ class _AddItemSheetState extends State<_AddItemSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Tambah Item Anggaran',
+          Text('Tambah Item Anggaran',
               style:
                   TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 20),
@@ -448,7 +448,7 @@ class _AddItemSheetState extends State<_AddItemSheet> {
                     decoration: BoxDecoration(
                       color: _type == ItemType.income
                           ? AppColors.income
-                          : AppColors.backgroundSecondary,
+                          : Theme.of(context).colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(
@@ -474,7 +474,7 @@ class _AddItemSheetState extends State<_AddItemSheet> {
                     decoration: BoxDecoration(
                       color: _type == ItemType.expense
                           ? AppColors.expense
-                          : AppColors.backgroundSecondary,
+                          : Theme.of(context).colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(
@@ -496,7 +496,7 @@ class _AddItemSheetState extends State<_AddItemSheet> {
           // Category
           DropdownButtonFormField<CategoryModel>(
             initialValue: _selectedCategory,
-            hint: const Text('Pilih Kategori'),
+            hint: Text('Pilih Kategori'),
             decoration: InputDecoration(
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -506,9 +506,8 @@ class _AddItemSheetState extends State<_AddItemSheet> {
                   borderSide: const BorderSide(color: AppColors.border)),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.primary)),
+                  borderSide: const BorderSide(color: AppColors.secondary)),
               filled: true,
-              fillColor: AppColors.backgroundSecondary,
             ),
             items: _filteredCategories.map((cat) {
               return DropdownMenuItem(
@@ -526,7 +525,6 @@ class _AddItemSheetState extends State<_AddItemSheet> {
               labelText: 'Jumlah',
               prefixText: 'Rp ',
               filled: true,
-              fillColor: AppColors.backgroundSecondary,
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: AppColors.border)),
@@ -535,7 +533,7 @@ class _AddItemSheetState extends State<_AddItemSheet> {
                   borderSide: const BorderSide(color: AppColors.border)),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.primary)),
+                  borderSide: const BorderSide(color: AppColors.secondary)),
             ),
           ),
           const SizedBox(height: 12),
@@ -544,7 +542,6 @@ class _AddItemSheetState extends State<_AddItemSheet> {
             decoration: InputDecoration(
               labelText: 'Deskripsi (opsional)',
               filled: true,
-              fillColor: AppColors.backgroundSecondary,
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: AppColors.border)),
@@ -553,7 +550,7 @@ class _AddItemSheetState extends State<_AddItemSheet> {
                   borderSide: const BorderSide(color: AppColors.border)),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.primary)),
+                  borderSide: const BorderSide(color: AppColors.secondary)),
             ),
           ),
           const SizedBox(height: 20),
@@ -562,7 +559,7 @@ class _AddItemSheetState extends State<_AddItemSheet> {
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(double.infinity, 48),
             ),
-            child: const Text('Simpan'),
+            child: Text('Simpan'),
           ),
           const SizedBox(height: 8),
         ],

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 
 void showSpSnackbar(
@@ -26,7 +26,7 @@ void showSpSnackbar(
           Expanded(
             child: Text(
               message,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ],
@@ -35,7 +35,7 @@ void showSpSnackbar(
           ? AppColors.error
           : isSuccess
               ? AppColors.success
-              : AppColors.primary,
+              : AppColors.primaryDark,
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       margin: const EdgeInsets.all(16),

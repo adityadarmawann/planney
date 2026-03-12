@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/constants/app_routes.dart';
+import 'core/constants/app_colors.dart';
 import 'core/theme/app_theme.dart';
 import 'data/repositories/auth_repository.dart';
 import 'data/repositories/user_repository.dart';
@@ -19,6 +20,7 @@ import 'providers/transaction_provider.dart';
 import 'providers/budget_provider.dart';
 import 'providers/paylater_provider.dart';
 import 'providers/expense_plan_provider.dart';
+import 'providers/theme_provider.dart';
 import 'presentation/screens/auth/splash_screen.dart';
 import 'presentation/screens/auth/onboarding_screen.dart';
 import 'presentation/screens/auth/login_screen.dart';
@@ -71,73 +73,86 @@ class App extends StatelessWidget {
     );
     final expensePlanRepo = ExpensePlanRepository(client: supabase);
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.white,
-        systemNavigationBarIconBrightness: Brightness.dark,
-      ),
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (_) => AuthProvider(authRepository: authRepo),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => AuthProvider(authRepository: authRepo),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(userRepository: userRepo),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => WalletProvider(walletRepository: walletRepo),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => TransactionProvider(
+            transactionRepository: txRepo,
           ),
-          ChangeNotifierProvider(
-            create: (_) => UserProvider(userRepository: userRepo),
-          ),
-          ChangeNotifierProvider(
-            create: (_) => WalletProvider(walletRepository: walletRepo),
-          ),
-          ChangeNotifierProvider(
-            create: (_) => TransactionProvider(
-              transactionRepository: txRepo,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => BudgetProvider(budgetRepository: budgetRepo),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PaylaterProvider(paylaterRepository: paylaterRepo),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ExpensePlanProvider(repository: expensePlanRepo),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ThemeProvider()..loadTheme(),
+        ),
+      ],
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, _) {
+          final isDark = themeProvider.themeMode == ThemeMode.dark;
+          final navColor = isDark ? const Color(0xFF110E1A) : AppColors.background;
+
+          return AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+              systemNavigationBarColor: navColor,
+              systemNavigationBarIconBrightness:
+                  isDark ? Brightness.light : Brightness.dark,
             ),
-          ),
-          ChangeNotifierProvider(
-            create: (_) => BudgetProvider(budgetRepository: budgetRepo),
-          ),
-          ChangeNotifierProvider(
-            create: (_) =>
-                PaylaterProvider(paylaterRepository: paylaterRepo),
-          ),
-          ChangeNotifierProvider(
-            create: (_) =>
-                ExpensePlanProvider(repository: expensePlanRepo),
-          ),
-        ],
-        child: MaterialApp(
-        title: 'Planney',
-        theme: AppTheme.lightTheme,
-        debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.splash,
-        routes: {
-          AppRoutes.splash: (_) => const SplashScreen(),
-          AppRoutes.onboarding: (_) => const OnboardingScreen(),
-          AppRoutes.login: (_) => const LoginScreen(),
-          AppRoutes.register: (_) => const RegisterScreen(),
-          AppRoutes.home: (_) => const MainScreen(),
-          AppRoutes.editProfile: (_) => const EditProfileScreen(),
-          AppRoutes.wallet: (_) => const WalletScreen(),
-          AppRoutes.topup: (_) => const TopupScreen(),
-          AppRoutes.topupSuccess: (_) => const TopupSuccessScreen(),
-          AppRoutes.transfer: (_) => const TransferScreen(),
-          AppRoutes.transferConfirm: (_) => const TransferConfirmScreen(),
-          AppRoutes.transferSuccess: (_) => const TransferSuccessScreen(),
-          AppRoutes.qrisSimulator: (_) => const QrisSimulatorScreen(),
-          AppRoutes.qrisPayment: (_) => const QrisPaymentScreen(),
-          AppRoutes.paylater: (_) => const PaylaterScreen(),
-          AppRoutes.paylaterApply: (_) => const PaylaterApplyScreen(),
-          AppRoutes.paylaterBill: (_) => const PaylaterBillScreen(),
-          AppRoutes.budgetCreate: (_) => const BudgetCreateScreen(),
-          AppRoutes.budgetDetail: (_) => const BudgetDetailScreen(),
-          AppRoutes.expensePlanCalendar: (_) => const ExpensePlanCalendarScreen(),
-          AppRoutes.expensePlanCreate: (_) => const ExpensePlanCreateScreen(),
-          AppRoutes.history: (_) => const HistoryScreen(),
-          AppRoutes.transactionDetail: (_) =>
-              const TransactionDetailScreen(),
+            child: MaterialApp(
+              title: 'Planney',
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: themeProvider.themeMode,
+              themeAnimationDuration: const Duration(milliseconds: 350),
+              themeAnimationCurve: Curves.easeInOutCubic,
+              debugShowCheckedModeBanner: false,
+              initialRoute: AppRoutes.splash,
+              routes: {
+                AppRoutes.splash: (_) => const SplashScreen(),
+                AppRoutes.onboarding: (_) => const OnboardingScreen(),
+                AppRoutes.login: (_) => const LoginScreen(),
+                AppRoutes.register: (_) => const RegisterScreen(),
+                AppRoutes.home: (_) => const MainScreen(),
+                AppRoutes.editProfile: (_) => const EditProfileScreen(),
+                AppRoutes.wallet: (_) => const WalletScreen(),
+                AppRoutes.topup: (_) => const TopupScreen(),
+                AppRoutes.topupSuccess: (_) => const TopupSuccessScreen(),
+                AppRoutes.transfer: (_) => const TransferScreen(),
+                AppRoutes.transferConfirm: (_) => const TransferConfirmScreen(),
+                AppRoutes.transferSuccess: (_) => const TransferSuccessScreen(),
+                AppRoutes.qrisSimulator: (_) => const QrisSimulatorScreen(),
+                AppRoutes.qrisPayment: (_) => const QrisPaymentScreen(),
+                AppRoutes.paylater: (_) => const PaylaterScreen(),
+                AppRoutes.paylaterApply: (_) => const PaylaterApplyScreen(),
+                AppRoutes.paylaterBill: (_) => const PaylaterBillScreen(),
+                AppRoutes.budgetCreate: (_) => const BudgetCreateScreen(),
+                AppRoutes.budgetDetail: (_) => const BudgetDetailScreen(),
+                AppRoutes.expensePlanCalendar: (_) =>
+                    const ExpensePlanCalendarScreen(),
+                AppRoutes.expensePlanCreate: (_) => const ExpensePlanCreateScreen(),
+                AppRoutes.history: (_) => const HistoryScreen(),
+                AppRoutes.transactionDetail: (_) => const TransactionDetailScreen(),
+              },
+            ),
+          );
         },
-      ),
       ),
     );
   }

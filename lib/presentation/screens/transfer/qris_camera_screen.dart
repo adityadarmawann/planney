@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -7,7 +7,9 @@ import '../../../core/constants/app_routes.dart';
 import '../../widgets/common/sp_button.dart';
 
 class QrisCameraScreen extends StatefulWidget {
-  const QrisCameraScreen({super.key});
+  final VoidCallback? onBackToHome;
+
+  const QrisCameraScreen({super.key, this.onBackToHome});
 
   @override
   State<QrisCameraScreen> createState() => _QrisCameraScreenState();
@@ -23,6 +25,20 @@ class _QrisCameraScreenState extends State<QrisCameraScreen> {
   double _maxZoom = 1.0;
   double _currentZoom = 1.0;
   bool _flashEnabled = false;
+
+  void _handleBackNavigation() {
+    if (widget.onBackToHome != null) {
+      widget.onBackToHome!.call();
+      return;
+    }
+
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+      return;
+    }
+
+    Navigator.pushReplacementNamed(context, AppRoutes.home);
+  }
 
   @override
   void initState() {
@@ -57,7 +73,7 @@ class _QrisCameraScreenState extends State<QrisCameraScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Gagal mengakses kamera')),
         );
-        Navigator.pop(context);
+        _handleBackNavigation();
       }
     }
   }
@@ -194,10 +210,10 @@ class _QrisCameraScreenState extends State<QrisCameraScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Scan QRIS'),
+        title: Text('Scan QRIS'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () => Navigator.pop(context),
+          icon: Icon(Icons.arrow_back_ios_new),
+          onPressed: _handleBackNavigation,
         ),
       ),
       body: FutureBuilder<void>(
@@ -224,7 +240,7 @@ class _QrisCameraScreenState extends State<QrisCameraScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: AppColors.primary,
+                              color: AppColors.secondary,
                               width: 2,
                             ),
                           ),
@@ -247,7 +263,7 @@ class _QrisCameraScreenState extends State<QrisCameraScreen> {
                                       height: 200,
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                          color: AppColors.primary,
+                                          color: AppColors.secondary,
                                           width: 2,
                                         ),
                                         borderRadius: BorderRadius.circular(12),
@@ -264,7 +280,7 @@ class _QrisCameraScreenState extends State<QrisCameraScreen> {
                             child: Container(
                               decoration: BoxDecoration(
                                 color: _flashEnabled
-                                    ? AppColors.primary
+                                    ? AppColors.secondary
                                     : Colors.black.withValues(alpha: 0.5),
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -308,8 +324,8 @@ class _QrisCameraScreenState extends State<QrisCameraScreen> {
                                       min: _minZoom,
                                       max: _maxZoom,
                                       onChanged: _setZoom,
-                                      activeColor: AppColors.primary,
-                                      inactiveColor: Colors.grey[600],
+                                      activeColor: AppColors.secondary,
+                                      inactiveColor: Theme.of(context).colorScheme.onSurfaceVariant,
                                     ),
                                   ),
                                   Icon(
@@ -320,7 +336,7 @@ class _QrisCameraScreenState extends State<QrisCameraScreen> {
                                   const SizedBox(width: 8),
                                   Text(
                                     '${_currentZoom.toStringAsFixed(1)}x',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
@@ -352,7 +368,7 @@ class _QrisCameraScreenState extends State<QrisCameraScreen> {
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
-                              color: AppColors.textPrimary,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -364,7 +380,7 @@ class _QrisCameraScreenState extends State<QrisCameraScreen> {
                             '• Tap Ambil Foto untuk capture',
                             style: TextStyle(
                               fontSize: 12,
-                              color: AppColors.textSecondary,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
                               height: 1.6,
                             ),
                           ),
@@ -388,8 +404,8 @@ class _QrisCameraScreenState extends State<QrisCameraScreen> {
                         height: 50,
                         child: OutlinedButton.icon(
                           onPressed: _pickFromGallery,
-                          icon: const Icon(Icons.image_outlined),
-                          label: const Text('Pilih dari Galeri'),
+                          icon: Icon(Icons.image_outlined),
+                          label: Text('Pilih dari Galeri'),
                           style: OutlinedButton.styleFrom(
                             side: const BorderSide(color: AppColors.border),
                           ),
@@ -431,8 +447,8 @@ class _QrisCameraScreenState extends State<QrisCameraScreen> {
                         height: 50,
                         child: OutlinedButton.icon(
                           onPressed: _retakePhoto,
-                          icon: const Icon(Icons.refresh),
-                          label: const Text('Ambil Ulang'),
+                          icon: Icon(Icons.refresh),
+                          label: Text('Ambil Ulang'),
                           style: OutlinedButton.styleFrom(
                             side: const BorderSide(color: AppColors.border),
                           ),
@@ -444,11 +460,11 @@ class _QrisCameraScreenState extends State<QrisCameraScreen> {
                       width: double.infinity,
                       height: 50,
                       child: OutlinedButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: _handleBackNavigation,
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                         ),
-                        child: const Text('Batal'),
+                        child: Text('Batal'),
                       ),
                     ),
                   ],
@@ -466,11 +482,11 @@ class _QrisCameraScreenState extends State<QrisCameraScreen> {
                     color: AppColors.error,
                   ),
                   const SizedBox(height: 16),
-                  const Text('Gagal mengakses kamera'),
+                  Text('Gagal mengakses kamera'),
                   const SizedBox(height: 24),
                   ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Kembali'),
+                    onPressed: _handleBackNavigation,
+                    child: Text('Kembali'),
                   ),
                 ],
               ),

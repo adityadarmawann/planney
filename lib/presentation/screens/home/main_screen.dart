@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/budget_provider.dart';
 import '../../../providers/wallet_provider.dart';
 import '../../../core/constants/app_strings.dart';
+import '../../../core/constants/app_colors.dart';
 import '../home/home_screen.dart';
 import '../budget/budget_screen.dart';
 import '../transfer/transfer_screen.dart';
@@ -20,14 +20,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
-
-  final List<Widget> _screens = const [
-    HomeScreen(),
-    BudgetScreen(),
-    QrisCameraScreen(),
-    TransferScreen(),
-    ProfileScreen(),
-  ];
 
   @override
   void initState() {
@@ -47,23 +39,35 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final screens = [
+      const HomeScreen(),
+      const BudgetScreen(),
+      QrisCameraScreen(onBackToHome: () => setState(() => _currentIndex = 0)),
+      const TransferScreen(),
+      const ProfileScreen(),
+    ];
+
     return Scaffold(
       body: SafeArea(
-        child: _screens[_currentIndex],
+        child: screens[_currentIndex],
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colorScheme.surface,
+          border: Border(
+            top: BorderSide(color: colorScheme.outlineVariant),
+          ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: 12,
-              offset: const Offset(0, -2),
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 16,
+              offset: const Offset(0, -4),
             ),
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -87,19 +91,19 @@ class _MainScreenState extends State<MainScreen> {
               GestureDetector(
                 onTap: () => setState(() => _currentIndex = 2),
                 child: Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(13),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF0052CC),
-                    borderRadius: BorderRadius.circular(14),
+                    gradient: AppColors.primaryGradient,
+                    borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF0052CC).withValues(alpha: 0.4),
-                        blurRadius: 8,
-                        offset: const Offset(0, 3),
+                        color: AppColors.secondary.withValues(alpha: 0.35),
+                        blurRadius: 14,
+                        offset: const Offset(0, 6),
                       ),
                     ],
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.qr_code_2,
                     size: 28,
                     color: Colors.white,
@@ -136,26 +140,37 @@ class _MainScreenState extends State<MainScreen> {
     required bool isActive,
     required VoidCallback onTap,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          color: isActive
+              ? colorScheme.secondary.withValues(alpha: 0.14)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
             isActive ? activeIcon : icon,
-            color: isActive ? Colors.black87 : Colors.black54,
+            color: isActive ? colorScheme.secondary : colorScheme.onSurfaceVariant,
             size: 24,
           ),
           const SizedBox(height: 4),
           Text(
             label,
-            style: GoogleFonts.poppins(
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
               fontSize: 11,
               fontWeight: isActive ? FontWeight.w700 : FontWeight.w400,
-              color: isActive ? Colors.black87 : Colors.black54,
+              color: isActive ? colorScheme.secondary : colorScheme.onSurfaceVariant,
             ),
           ),
         ],
+      ),
       ),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/wallet_provider.dart';
@@ -66,9 +66,9 @@ class _TransferConfirmScreenState extends State<TransferConfirmScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Konfirmasi Transfer'),
+        title: Text('Konfirmasi Transfer'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -85,7 +85,7 @@ class _TransferConfirmScreenState extends State<TransferConfirmScreen> {
                       width: 80,
                       height: 80,
                       decoration: BoxDecoration(
-                        color: AppColors.primaryLightest,
+                        color: AppColors.secondaryLight.withValues(alpha: 0.2),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -93,7 +93,7 @@ class _TransferConfirmScreenState extends State<TransferConfirmScreen> {
                             ? Icons.qr_code_2_rounded
                             : Icons.send_rounded,
                         size: 36,
-                        color: AppColors.primary,
+                        color: AppColors.secondary,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -103,7 +103,7 @@ class _TransferConfirmScreenState extends State<TransferConfirmScreen> {
                           : type == TransferType.bank
                               ? 'Transfer ke Bank'
                               : 'Pembayaran QRIS',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -114,7 +114,7 @@ class _TransferConfirmScreenState extends State<TransferConfirmScreen> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: AppColors.backgroundSecondary,
+                        color: Theme.of(context).colorScheme.surfaceContainerHighest,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: AppColors.border),
                       ),
@@ -141,10 +141,10 @@ class _TransferConfirmScreenState extends State<TransferConfirmScreen> {
                           _DetailRow(
                             label: 'Jumlah',
                             value: CurrencyFormatter.format(amount),
-                            valueStyle: const TextStyle(
+                            valueStyle: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
+                              color: AppColors.secondary,
                             ),
                           ),
                           if (fee > 0)
@@ -157,10 +157,10 @@ class _TransferConfirmScreenState extends State<TransferConfirmScreen> {
                             _DetailRow(
                               label: 'Total',
                               value: CurrencyFormatter.format(amount + fee),
-                              valueStyle: const TextStyle(
+                              valueStyle: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.textPrimary,
+                                color: Theme.of(context).colorScheme.onSurface,
                               ),
                             ),
                           if (note.isNotEmpty) ...[
@@ -338,18 +338,18 @@ class _DetailRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label,
-              style: const TextStyle(
-                  color: AppColors.textSecondary, fontSize: 14)),
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 14)),
           const SizedBox(width: 16),
           Flexible(
             child: Text(
               value,
               textAlign: TextAlign.end,
               style: valueStyle ??
-                  const TextStyle(
+                  TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
             ),
           ),

@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/user_provider.dart';
 import '../../../providers/wallet_provider.dart';
+import '../../../providers/theme_provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/utils/currency_formatter.dart';
@@ -92,17 +93,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Hapus Foto Profil'),
-        content: const Text('Yakin ingin menghapus foto profil Anda?'),
+        title: Text('Hapus Foto Profil'),
+        content: Text('Yakin ingin menghapus foto profil Anda?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Batal'),
+            child: Text('Batal'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: const Text('Hapus'),
+            style: TextButton.styleFrom(foregroundColor: AppColors.error),
+            child: Text('Hapus'),
           ),
         ],
       ),
@@ -153,27 +154,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: const Icon(Icons.photo_library_outlined),
-                title: const Text('Pilih dari Galeri'),
+                leading: Icon(Icons.photo_library_outlined),
+                title: Text('Pilih dari Galeri'),
                 onTap: () {
                   Navigator.pop(context);
                   _pickAndUploadAvatar(ImageSource.gallery);
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.photo_camera_outlined),
-                title: const Text('Ambil dari Kamera'),
+                leading: Icon(Icons.photo_camera_outlined),
+                title: Text('Ambil dari Kamera'),
                 onTap: () {
                   Navigator.pop(context);
                   _pickAndUploadAvatar(ImageSource.camera);
                 },
               ),
               if (hasAvatar)
-                Divider(height: 1, color: Colors.grey[300]),
+                const Divider(height: 1, color: AppColors.divider),
               if (hasAvatar)
                 ListTile(
-                  leading: const Icon(Icons.delete_outline, color: Colors.red),
-                  title: const Text('Hapus Foto Profil', style: TextStyle(color: Colors.red)),
+                  leading: Icon(Icons.delete_outline, color: AppColors.error),
+                  title: Text(
+                    'Hapus Foto Profil',
+                    style: TextStyle(color: AppColors.error),
+                  ),
                   onTap: () {
                     Navigator.pop(context);
                     _deleteAvatar();
@@ -210,9 +214,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 top: 8,
                 child: IconButton(
                   onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.close, color: Colors.white),
+                  icon: Icon(Icons.close, color: Colors.white),
                   style: IconButton.styleFrom(
-                    backgroundColor: Colors.black45,
+                    backgroundColor: AppColors.primaryDark.withValues(alpha: 0.6),
                   ),
                 ),
               ),
@@ -227,6 +231,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().user;
     final wallet = context.watch<WalletProvider>().wallet;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
@@ -244,7 +249,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       : null,
                   child: CircleAvatar(
                     radius: 50,
-                    backgroundColor: AppColors.primaryLightest,
+                    backgroundColor: AppColors.secondaryLight.withValues(alpha: 0.25),
                     backgroundImage: user?.avatarUrl != null
                         ? NetworkImage(user!.avatarUrl!)
                         : null,
@@ -260,10 +265,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ? user!.fullName[0]
                                         : 'U')
                                     .toUpperCase(),
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 36,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.primary,
+                                  color: AppColors.secondary,
                                 ),
                               )
                             : null,
@@ -279,11 +284,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: 32,
                       height: 32,
                       decoration: BoxDecoration(
-                        color: AppColors.primary,
+                        color: AppColors.secondary,
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Colors.white, width: 2),
+                        border: Border.all(
+                          color: AppColors.secondaryLight.withValues(alpha: 0.6),
+                          width: 2,
+                        ),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.camera_alt_outlined,
                         size: 16,
                         color: Colors.white,
@@ -295,25 +303,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             'Ketuk foto untuk lihat, ikon kamera untuk ganti',
-            style: TextStyle(fontSize: 12, color: AppColors.textHint),
+            style: TextStyle(fontSize: 12, color: colorScheme.onSurfaceVariant),
           ),
           const SizedBox(height: 16),
           Text(
             user?.fullName ?? 'Pengguna',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             '@${user?.username ?? ''}',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
-              color: AppColors.textSecondary,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(height: 24),
@@ -321,21 +329,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             decoration: BoxDecoration(
-              color: AppColors.primaryLightest,
+              color: AppColors.secondaryLight.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColors.secondaryLight),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.account_balance_wallet,
-                    color: AppColors.primary, size: 20),
+                Icon(Icons.account_balance_wallet,
+                    color: AppColors.secondary, size: 20),
                 const SizedBox(width: 8),
                 Text(
                   CurrencyFormatter.format(wallet?.balance ?? 0),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
+                    color: AppColors.secondary,
                   ),
                 ),
               ],
@@ -389,6 +398,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onTap: () => Navigator.pushNamed(context, AppRoutes.history),
                 ),
                 const Divider(height: 1),
+                Consumer<ThemeProvider>(
+                  builder: (_, tp, __) {
+                    final modeLabel = tp.themeMode == ThemeMode.dark
+                        ? 'Dark Mode'
+                        : tp.themeMode == ThemeMode.system
+                            ? 'Ikuti Sistem'
+                            : 'Light Mode';
+                    return _MenuTile(
+                      icon: Icons.palette_outlined,
+                      label: 'Tema Aplikasi',
+                      subtitle: modeLabel,
+                      onTap: () => _showThemeSelector(context),
+                    );
+                  },
+                ),
+                const Divider(height: 1),
                 _MenuTile(
                   icon: Icons.logout,
                   label: 'Keluar',
@@ -399,13 +424,90 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           const SizedBox(height: 24),
-          const Text(
+          Text(
             'Planney v1.6.4',
-            style: TextStyle(color: AppColors.textHint, fontSize: 12),
+            style: TextStyle(color: colorScheme.onSurfaceVariant, fontSize: 12),
           ),
           const SizedBox(height: 24),
         ],
       ),
+    );
+  }
+
+  void _showThemeSelector(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (sheetCtx) {
+        return Consumer<ThemeProvider>(
+          builder: (ctx, themeProvider, __) {
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 4,
+                      margin: const EdgeInsets.only(bottom: 16),
+                      decoration: BoxDecoration(
+                        color: Theme.of(ctx).colorScheme.outline.withValues(alpha: 0.4),
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Pilih Tema',
+                        style: Theme.of(ctx).textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    _ThemeModeTile(
+                      icon: Icons.light_mode_outlined,
+                      title: 'Light Mode',
+                      subtitle: 'Tampilan cerah, bersih, dan lembut',
+                      isSelected: themeProvider.themeMode == ThemeMode.light,
+                      onTap: () async {
+                        await themeProvider.setThemeMode(ThemeMode.light);
+                        if (ctx.mounted) Navigator.pop(ctx);
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    _ThemeModeTile(
+                      icon: Icons.dark_mode_outlined,
+                      title: 'Dark Mode',
+                      subtitle: 'Nuansa gelap elegan, nyaman di malam hari',
+                      isSelected: themeProvider.themeMode == ThemeMode.dark,
+                      onTap: () async {
+                        await themeProvider.setThemeMode(ThemeMode.dark);
+                        if (ctx.mounted) Navigator.pop(ctx);
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    _ThemeModeTile(
+                      icon: Icons.contrast_outlined,
+                      title: 'Ikuti Sistem',
+                      subtitle: 'Menyesuaikan tema dengan pengaturan perangkat',
+                      isSelected: themeProvider.themeMode == ThemeMode.system,
+                      onTap: () async {
+                        await themeProvider.setThemeMode(ThemeMode.system);
+                        if (ctx.mounted) Navigator.pop(ctx);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -414,12 +516,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Keluar'),
-        content: const Text('Apakah kamu yakin ingin keluar dari akun?'),
+        title: Text('Keluar'),
+        content: Text('Apakah kamu yakin ingin keluar dari akun?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Batal'),
+            child: Text('Batal'),
           ),
           TextButton(
             onPressed: () async {
@@ -433,7 +535,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
               }
             },
-            child: const Text('Keluar',
+            child: Text('Keluar',
                 style: TextStyle(color: AppColors.error)),
           ),
         ],
@@ -441,6 +543,82 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
+
+class _ThemeModeTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _ThemeModeTile({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? cs.secondary.withValues(alpha: 0.12)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: isSelected ? cs.secondary : cs.outline.withValues(alpha: 0.4),
+            width: isSelected ? 1.5 : 1.0,
+          ),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color: isSelected ? cs.secondary : cs.onSurfaceVariant,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: isSelected ? cs.secondary : cs.onSurface,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: cs.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              isSelected ? Icons.check_circle : Icons.circle_outlined,
+              color: isSelected ? cs.secondary : cs.outline,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 
 class _InfoTile extends StatelessWidget {
   final IconData icon;
@@ -455,22 +633,26 @@ class _InfoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: AppColors.textHint),
+          Icon(icon, size: 20, color: cs.onSurfaceVariant),
           const SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(label,
-                  style: const TextStyle(
-                      fontSize: 11, color: AppColors.textHint)),
+                  style: TextStyle(
+                      fontSize: 11, color: cs.onSurfaceVariant)),
               const SizedBox(height: 2),
               Text(value,
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w500)),
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: cs.onSurface,
+                  )),
             ],
           ),
         ],
@@ -482,6 +664,7 @@ class _InfoTile extends StatelessWidget {
 class _MenuTile extends StatelessWidget {
   final IconData icon;
   final String label;
+  final String? subtitle;
   final VoidCallback onTap;
   final Color? color;
 
@@ -489,25 +672,32 @@ class _MenuTile extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.onTap,
+    this.subtitle,
     this.color,
   });
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return ListTile(
       onTap: onTap,
       contentPadding: EdgeInsets.zero,
-      leading: Icon(icon, color: color ?? AppColors.textSecondary, size: 22),
+      leading: Icon(icon, color: color ?? cs.onSurfaceVariant, size: 22),
       title: Text(
         label,
         style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w500,
-          color: color ?? AppColors.textPrimary,
+          color: color ?? cs.onSurface,
         ),
       ),
-      trailing: const Icon(Icons.chevron_right,
-          color: AppColors.textHint, size: 20),
+      subtitle: subtitle != null
+          ? Text(
+              subtitle!,
+              style: TextStyle(fontSize: 11, color: cs.secondary),
+            )
+          : null,
+      trailing: Icon(Icons.chevron_right, color: cs.outline, size: 20),
     );
   }
 }

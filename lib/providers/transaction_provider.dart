@@ -38,7 +38,8 @@ class TransactionProvider extends ChangeNotifier {
     if (type == 'paylater') {
       return _transactions
           .where((t) => t.typeString == 'paylater_disbursement' || 
-                       t.typeString == 'paylater_payment')
+                       t.typeString == 'paylater_payment' ||
+                       t.typeString == 'qris_paylater')
           .toList();
     }
     // Filter transfer masuk: hanya tampilkan jika user adalah penerima

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../../data/models/transaction_model.dart';
 import '../../../core/constants/app_colors.dart';
@@ -56,14 +56,14 @@ class WalletSummaryChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (topupAmount == 0 && expenseAmount == 0 && paylaterAmount == 0) {
-      return const Center(
+      return Center(
         child: Padding(
           padding: EdgeInsets.all(24),
           child: Text(
             'Belum ada data transaksi',
             style: TextStyle(
               fontSize: 13,
-              color: AppColors.textHint,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ),
@@ -90,7 +90,7 @@ class WalletSummaryChart extends StatelessWidget {
                       final amount = rod.toY.toInt().toDouble();
                       return BarTooltipItem(
                         CurrencyFormatter.format(amount),
-                        const TextStyle(
+                        TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
@@ -106,8 +106,8 @@ class WalletSummaryChart extends StatelessWidget {
                       showTitles: true,
                       getTitlesWidget: (value, meta) => Text(
                         _getTitleLabel(value),
-                        style: const TextStyle(
-                          color: AppColors.textSecondary,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                           fontWeight: FontWeight.w500,
                           fontSize: 11,
                         ),
@@ -164,7 +164,7 @@ class WalletSummaryChart extends StatelessWidget {
                     barRods: [
                       BarChartRodData(
                         toY: paylaterAmount,
-                        color: const Color(0xFFFF9500),
+                        color: AppColors.secondary,
                         width: 32,
                         borderRadius: const BorderRadius.vertical(
                           top: Radius.circular(6),
@@ -196,7 +196,7 @@ class WalletSummaryChart extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               _SummaryItem(
-                color: const Color(0xFFFF9500),
+                color: AppColors.secondary,
                 label: 'Pay Later',
                 value: paylaterAmount,
               ),
@@ -237,20 +237,20 @@ class _SummaryItem extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
-                color: AppColors.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ],
         ),
         Text(
           CurrencyFormatter.format(value),
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
       ],

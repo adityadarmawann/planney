@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/utils/currency_formatter.dart';
 
@@ -44,7 +44,7 @@ class _BalanceCardState extends State<BalanceCard> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Saldo Planney',
                     style: TextStyle(
                       color: Colors.white70,
@@ -55,7 +55,7 @@ class _BalanceCardState extends State<BalanceCard> {
                     const SizedBox(height: 2),
                     Text(
                       'Halo, ${widget.userName}! 👋',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -83,7 +83,7 @@ class _BalanceCardState extends State<BalanceCard> {
             _hideBalance
                 ? 'Rp •••••••'
                 : CurrencyFormatter.format(widget.balance),
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
               fontSize: 28,
               fontWeight: FontWeight.bold,

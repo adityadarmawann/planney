@@ -14,11 +14,12 @@ class BudgetChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     if (income == 0 && expense == 0) {
-      return const Center(
+      return Center(
         child: Text(
           'Belum ada data anggaran',
-          style: TextStyle(color: AppColors.textHint),
+          style: TextStyle(color: colorScheme.onSurfaceVariant),
         ),
       );
     }
@@ -48,7 +49,7 @@ class BudgetChart extends StatelessWidget {
                 if (income > expense)
                   PieChartSectionData(
                     value: income - expense,
-                    color: AppColors.primaryLightest,
+                    color: AppColors.secondaryLight,
                     title: '',
                     radius: 45,
                   ),
@@ -76,7 +77,7 @@ class BudgetChart extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             _LegendItem(
-              color: AppColors.primaryLightest,
+              color: AppColors.secondaryLight,
               label: 'Sisa',
               value: (income - expense).clamp(0, double.infinity),
             ),
@@ -100,6 +101,7 @@ class _LegendItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Container(
@@ -113,9 +115,9 @@ class _LegendItem extends StatelessWidget {
         const SizedBox(width: 8),
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 12,
-            color: AppColors.textSecondary,
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
       ],

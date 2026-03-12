@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 
 class QuickActionGrid extends StatelessWidget {
@@ -23,25 +23,25 @@ class QuickActionGrid extends StatelessWidget {
         _ActionItem(
           icon: Icons.add_circle_outline,
           label: 'Top Up',
-          color: AppColors.success,
+          color: AppColors.primaryLight,
           onTap: onTopUp,
         ),
         _ActionItem(
           icon: Icons.send,
           label: 'Transfer',
-          color: AppColors.primary,
+          color: AppColors.secondary,
           onTap: onTransfer,
         ),
         _ActionItem(
           icon: Icons.calendar_month_rounded,
           label: 'My Plan',
-          color: AppColors.info,
+          color: AppColors.primaryLighter,
           onTap: onRencana,
         ),
         _ActionItem(
           icon: Icons.credit_card,
           label: 'PayLater',
-          color: AppColors.error,
+          color: AppColors.accentPink,
           onTap: onPayLater,
         ),
       ],
@@ -73,17 +73,20 @@ class _ActionItem extends StatelessWidget {
             height: 44,
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: color.withValues(alpha: 0.25),
+              ),
             ),
             child: Icon(icon, color: color, size: 20),
           ),
           const SizedBox(height: 6),
           Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w500,
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
             textAlign: TextAlign.center,
           ),

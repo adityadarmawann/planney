@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/constants/app_strings.dart';
@@ -20,19 +20,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       icon: Icons.account_balance_wallet_rounded,
       title: AppStrings.onboarding1Title,
       description: AppStrings.onboarding1Desc,
-      color: AppColors.primary,
+      color: AppColors.secondary,
     ),
     _OnboardingData(
       icon: Icons.pie_chart_rounded,
       title: AppStrings.onboarding2Title,
       description: AppStrings.onboarding2Desc,
-      color: AppColors.primaryDark,
+      color: AppColors.secondary,
     ),
     _OnboardingData(
       icon: Icons.send_rounded,
       title: AppStrings.onboarding3Title,
       description: AppStrings.onboarding3Desc,
-      color: AppColors.primaryLight,
+      color: AppColors.secondary,
     ),
   ];
 
@@ -56,7 +56,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -65,7 +65,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: TextButton(
                 onPressed: () =>
                     Navigator.pushReplacementNamed(context, AppRoutes.login),
-                child: const Text(AppStrings.skip),
+                child: Text(AppStrings.skip),
               ),
             ),
             Expanded(
@@ -95,8 +95,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         height: 8,
                         decoration: BoxDecoration(
                           color: _currentPage == index
-                              ? AppColors.primary
-                              : AppColors.primaryLightest,
+                              ? AppColors.secondary
+                              : AppColors.secondaryLight.withValues(alpha: 0.45),
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
@@ -144,19 +144,19 @@ class _OnboardingPage extends StatelessWidget {
           Text(
             data.title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 16),
           Text(
             data.description,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 15,
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
               height: 1.6,
             ),
           ),

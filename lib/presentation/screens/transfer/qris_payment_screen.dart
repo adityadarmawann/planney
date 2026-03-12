@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
@@ -93,9 +93,9 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pembayaran QRIS'),
+        title: Text('Pembayaran QRIS'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -133,28 +133,28 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppColors.backgroundSecondary,
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: AppColors.border),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Merchant',
                       style: TextStyle(
                         fontSize: 12,
-                        color: AppColors.textHint,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
+                    Text(
                       'Warung UMKM Indonesia',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                   ],
@@ -162,12 +162,12 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
               ),
               const SizedBox(height: 24),
               // Amount Input
-              const Text(
+              Text(
                 'Jumlah Pembayaran',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
@@ -177,17 +177,17 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
                 onChanged: (_) => setState(() {}),
                 inputFormatters: [ThousandSeparatorFormatter()],
                 textAlign: TextAlign.end,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+                  color: AppColors.secondary,
                 ),
                 decoration: InputDecoration(
                   prefixText: 'Rp ',
-                  prefixStyle: const TextStyle(
+                  prefixStyle: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -200,7 +200,7 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: const BorderSide(
-                      color: AppColors.primary,
+                      color: AppColors.secondary,
                       width: 2,
                     ),
                   ),
@@ -212,12 +212,12 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
               ),
               const SizedBox(height: 16),
               // Quick amount buttons
-              const Text(
+              Text(
                 'Pilihan Cepat',
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textHint,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: 8),
@@ -266,20 +266,20 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryLightest,
+                  color: AppColors.secondaryLight.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: AppColors.primary.withValues(alpha: 0.3),
+                    color: AppColors.secondary.withValues(alpha: 0.3),
                   ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Total Pembayaran',
                       style: TextStyle(
                         fontSize: 12,
-                        color: AppColors.textHint,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -287,10 +287,10 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
                       CurrencyFormatter.format(
                         CurrencyFormatter.parse(_amountController.text),
                       ),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
+                        color: AppColors.secondary,
                       ),
                     ),
                   ],
@@ -317,7 +317,7 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
-                  child: const Text('Batal'),
+                  child: Text('Batal'),
                 ),
               ),
             ],
@@ -352,10 +352,10 @@ class _QuickAmountButton extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
-          color: AppColors.textPrimary,
+          color: Theme.of(context).colorScheme.onSurface,
         ),
       ),
     );

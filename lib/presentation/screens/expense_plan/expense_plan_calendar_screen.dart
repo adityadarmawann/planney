@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/expense_plan_provider.dart';
@@ -63,16 +63,16 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Hapus Rencana'),
+        title: Text('Hapus Rencana'),
         content: Text('Hapus rencana "$planTitle"?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Batal'),
+            child: Text('Batal'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text(
+            child: Text(
               'Hapus',
               style: TextStyle(color: AppColors.error),
             ),
@@ -136,11 +136,11 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
     final authProvider = context.read<AuthProvider>();
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text('Rencana Pengeluaran'),
+        title: Text('Rencana Pengeluaran'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -194,21 +194,21 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
       children: [
         IconButton(
           onPressed: _previousMonth,
-          icon: const Icon(Icons.chevron_left),
-          color: AppColors.primary,
+          icon: Icon(Icons.chevron_left),
+          color: AppColors.secondary,
         ),
         Text(
           DateFormatter.formatMonthYear(_selectedDate),
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         IconButton(
           onPressed: _nextMonth,
-          icon: const Icon(Icons.chevron_right),
-          color: AppColors.primary,
+          icon: Icon(Icons.chevron_right),
+          color: AppColors.secondary,
         ),
       ],
     );
@@ -232,9 +232,9 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
           children: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab']
               .map((day) => Text(
                     day,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textSecondary,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ))
               .toList(),
@@ -278,12 +278,12 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: isSelected
-                      ? AppColors.primary
+                      ? AppColors.secondary
                       : hasPlans
-                          ? AppColors.primaryLightest
+                          ? AppColors.secondaryLight.withValues(alpha: 0.25)
                           : Colors.transparent,
                   border: isToday
-                      ? Border.all(color: AppColors.primary, width: 2)
+                      ? Border.all(color: AppColors.secondary, width: 2)
                       : null,
                 ),
                 child: Stack(
@@ -292,8 +292,9 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                     Text(
                       '$day',
                       style: TextStyle(
-                        color:
-                            isSelected ? Colors.white : AppColors.textPrimary,
+                        color: isSelected
+                            ? Colors.white
+                            : Theme.of(context).colorScheme.onSurface,
                         fontWeight:
                             isSelected ? FontWeight.w600 : FontWeight.w400,
                       ),
@@ -306,7 +307,7 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                           height: 4,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColors.primary,
+                            color: AppColors.secondary,
                           ),
                         ),
                       ),
@@ -336,19 +337,19 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Summary',
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textSecondary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.1),
+                color: AppColors.secondary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -359,25 +360,25 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                     children: [
                       Text(
                         'Total ${DateFormatter.formatMonthYear(_selectedDate)}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
-                          color: AppColors.textSecondary,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         CurrencyFormatter.format(total),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.primary,
+                          color: AppColors.secondary,
                         ),
                       ),
                     ],
                   ),
                   Icon(
                     Icons.calendar_month_rounded,
-                    color: AppColors.primary,
+                    color: AppColors.secondary,
                     size: 32,
                   ),
                 ],
@@ -397,10 +398,10 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
       children: [
         Text(
           'Rencana Pengeluaran - ${DateFormatter.formatDate(_selectedDate)}',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 16),
@@ -413,13 +414,13 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                   Icon(
                     Icons.calendar_today_outlined,
                     size: 48,
-                    color: AppColors.textSecondary.withValues(alpha: 0.3),
+                    color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.3),
                   ),
                   const SizedBox(height: 12),
                   Text(
                     'Tidak ada rencana pengeluaran',
                     style: TextStyle(
-                      color: AppColors.textSecondary.withValues(alpha: 0.6),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                     ),
                   ),
                 ],
@@ -440,12 +441,12 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                 decoration: BoxDecoration(
                   color: plan.isCompleted
                       ? AppColors.textHint.withValues(alpha: 0.05)
-                      : Colors.white,
+                      : Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: plan.isCompleted
                         ? AppColors.textHint.withValues(alpha: 0.3)
-                        : AppColors.primaryLightest,
+                        : AppColors.border,
                   ),
                 ),
                 child: Column(
@@ -469,30 +470,22 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                                   success
                                       ? (plan.isCompleted
                                           ? 'Rencana ditandai belum selesai'
-                                          : 'Rencana ditandai selesai ✓')
+                                          : 'Rencana ditandai selesai')
                                       : (provider.errorMessage ??
                                           'Gagal mengubah status rencana'),
                                 ),
                                 duration: const Duration(seconds: 2),
-                                backgroundColor: success
-                                    ? (plan.isCompleted
-                                        ? AppColors.textSecondary
-                                        : AppColors.success)
-                                    : AppColors.error,
                               ),
                             );
                           },
-                          child: Container(
-                            margin: const EdgeInsets.only(right: 12, top: 2),
-                            child: Icon(
-                              plan.isCompleted
-                                  ? Icons.check_circle
-                                  : Icons.radio_button_unchecked,
-                              color: plan.isCompleted
-                                  ? AppColors.success
-                                  : AppColors.textSecondary,
-                              size: 24,
-                            ),
+                          child: Icon(
+                            plan.isCompleted
+                                ? Icons.check_circle
+                                : Icons.radio_button_unchecked,
+                            color: plan.isCompleted
+                                ? AppColors.success
+                                : AppColors.textSecondary,
+                            size: 24,
                           ),
                         ),
                         // Content
@@ -510,7 +503,7 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
-                                        color: AppColors.textPrimary,
+                                        color: Theme.of(context).colorScheme.onSurface,
                                         decoration: plan.isCompleted
                                             ? TextDecoration.lineThrough
                                             : TextDecoration.none,
@@ -528,7 +521,7 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
-                                          color: AppColors.primary,
+                                          color: AppColors.secondary,
                                           decoration: plan.isCompleted
                                               ? TextDecoration.lineThrough
                                               : TextDecoration.none,
@@ -540,12 +533,12 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                                       InkWell(
                                         onTap: () => _openEditExpensePlan(plan),
                                         borderRadius: BorderRadius.circular(8),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(4),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4),
                                           child: Icon(
                                             Icons.edit_outlined,
                                             size: 18,
-                                            color: AppColors.textSecondary,
+                                            color: Theme.of(context).colorScheme.onSurfaceVariant,
                                           ),
                                         ),
                                       ),
@@ -556,8 +549,8 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                                           plan.title,
                                         ),
                                         borderRadius: BorderRadius.circular(8),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(4),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4),
                                           child: Icon(
                                             Icons.delete_outline,
                                             size: 18,
@@ -574,7 +567,7 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                                 plan.category,
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: AppColors.textSecondary,
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                                   decoration: plan.isCompleted
                                       ? TextDecoration.lineThrough
                                       : TextDecoration.none,
@@ -588,9 +581,9 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                                   Expanded(
                                     child: Text(
                                       'Sumber: ${plan.paymentSource}',
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 12,
-                                        color: AppColors.textSecondary,
+                                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                                       ),
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -598,9 +591,9 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                                   const SizedBox(width: 8),
                                   Text(
                                     'Jam: ${plan.plannedTime}',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 12,
-                                      color: AppColors.textSecondary,
+                                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                                     ),
                                   ),
                                 ],
@@ -608,9 +601,9 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                               const SizedBox(height: 4),
                               Text(
                                 'Pengingat: ${_formatReminderLabel(plan)}',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 12,
-                                  color: AppColors.primary,
+                                  color: AppColors.secondary,
                                 ),
                               ),
                               if (plan.notes != null &&
@@ -618,9 +611,9 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
                                 const SizedBox(height: 8),
                                 Text(
                                   plan.notes!,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
-                                    color: AppColors.textSecondary,
+                                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                                     fontStyle: FontStyle.italic,
                                   ),
                                 ),
@@ -639,3 +632,4 @@ class _ExpensePlanCalendarScreenState extends State<ExpensePlanCalendarScreen> {
     );
   }
 }
+

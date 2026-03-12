@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import '../../../core/constants/app_colors.dart';
@@ -72,9 +72,9 @@ class _QrisSimulatorScreenState extends State<QrisSimulatorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Simulasi Pembayaran QRIS'),
+        title: Text('Simulasi Pembayaran QRIS'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -92,31 +92,31 @@ class _QrisSimulatorScreenState extends State<QrisSimulatorScreen> {
                       width: 100,
                       height: 100,
                       decoration: BoxDecoration(
-                        color: AppColors.primaryLightest,
+                        color: AppColors.secondaryLight.withValues(alpha: 0.15),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.qr_code_2_rounded,
                         size: 50,
-                        color: AppColors.primary,
+                        color: AppColors.secondary,
                       ),
                     ),
                     const SizedBox(height: 24),
-                    const Text(
+                    Text(
                       'Simulasi QRIS',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
+                    Text(
                       'Pilih atau ambil foto untuk simulasi pembayaran',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 14,
-                        color: AppColors.textSecondary,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
                     const SizedBox(height: 32),
@@ -145,7 +145,7 @@ class _QrisSimulatorScreenState extends State<QrisSimulatorScreen> {
                         width: double.infinity,
                         height: 240,
                         decoration: BoxDecoration(
-                          color: AppColors.backgroundSecondary,
+                          color: Theme.of(context).colorScheme.surfaceContainerHighest,
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
                             color: AppColors.border,
@@ -159,13 +159,13 @@ class _QrisSimulatorScreenState extends State<QrisSimulatorScreen> {
                             Icon(
                               Icons.image_outlined,
                               size: 64,
-                              color: AppColors.textHint,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
                             ),
                             const SizedBox(height: 12),
-                            const Text(
+                            Text(
                               'Belum ada gambar dipilih',
                               style: TextStyle(
-                                color: AppColors.textSecondary,
+                                color: Theme.of(context).colorScheme.onSurfaceVariant,
                                 fontSize: 14,
                               ),
                             ),
@@ -183,7 +183,7 @@ class _QrisSimulatorScreenState extends State<QrisSimulatorScreen> {
                           color: AppColors.info.withValues(alpha: 0.3),
                         ),
                       ),
-                      child: const Row(
+                      child: Row(
                         children: [
                           Icon(
                             Icons.info_outline,
@@ -196,7 +196,7 @@ class _QrisSimulatorScreenState extends State<QrisSimulatorScreen> {
                               'Pilih gambar apa saja sebagai simulasi. Di langkah berikutnya, masukkan jumlah pembayaran.',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: AppColors.textSecondary,
+                                color: Theme.of(context).colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ),
@@ -214,8 +214,8 @@ class _QrisSimulatorScreenState extends State<QrisSimulatorScreen> {
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: _takePicture,
-                    icon: const Icon(Icons.camera_alt_outlined),
-                    label: const Text('Ambil Foto'),
+                    icon: Icon(Icons.camera_alt_outlined),
+                    label: Text('Ambil Foto'),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
@@ -225,8 +225,8 @@ class _QrisSimulatorScreenState extends State<QrisSimulatorScreen> {
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: _pickImage,
-                    icon: const Icon(Icons.photo_library_outlined),
-                    label: const Text('Pilih Galeri'),
+                    icon: Icon(Icons.photo_library_outlined),
+                    label: Text('Pilih Galeri'),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),

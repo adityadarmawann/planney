@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_routes.dart';
@@ -14,7 +14,7 @@ class TopupSuccessScreen extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as TransactionModel;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(32),
@@ -28,27 +28,27 @@ class TopupSuccessScreen extends StatelessWidget {
                   color: AppColors.successLight,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.check_circle,
                   size: 60,
                   color: AppColors.success,
                 ),
               ),
               const SizedBox(height: 24),
-              const Text(
+              Text(
                 'Berhasil! 🎉',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
+              Text(
                 'Top up berhasil masuk ke dompet Anda',
                 style: TextStyle(
                   fontSize: 15,
-                  color: AppColors.textSecondary,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -57,21 +57,21 @@ class TopupSuccessScreen extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: AppColors.backgroundSecondary,
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.border),
                 ),
                 child: Column(
                   children: [
-                    const Text(
+                    Text(
                       'Jumlah Top Up',
                       style: TextStyle(
-                          color: AppColors.textSecondary, fontSize: 13),
+                          color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 13),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       CurrencyFormatter.format(args.amount),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                         color: AppColors.success,
@@ -82,7 +82,7 @@ class TopupSuccessScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 12),
                       decoration: BoxDecoration(
-                        color: AppColors.primaryLightest,
+                        color: AppColors.secondaryLight.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Column(
@@ -90,19 +90,19 @@ class TopupSuccessScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 'Kode Referensi',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: AppColors.textSecondary,
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                                 ),
                               ),
                               Text(
                                 args.refCode,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
-                                  color: AppColors.primary,
+                                  color: AppColors.secondary,
                                   letterSpacing: 1,
                                 ),
                               ),
@@ -117,20 +117,20 @@ class TopupSuccessScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 'Waktu Transaksi',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: AppColors.textSecondary,
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                                 ),
                               ),
                               Text(
                                 DateFormat('dd MMM yyyy, HH:mm')
                                     .format(args.createdAt.toLocal()),
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
-                                  color: AppColors.textPrimary,
+                                  color: Theme.of(context).colorScheme.onSurface,
                                 ),
                               ),
                             ],
@@ -145,19 +145,19 @@ class TopupSuccessScreen extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
+                                Text(
                                   'Metode',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: AppColors.textSecondary,
+                                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                                   ),
                                 ),
                                 Text(
                                   args.note!,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
-                                    color: AppColors.textPrimary,
+                                    color: Theme.of(context).colorScheme.onSurface,
                                   ),
                                 ),
                               ],
@@ -176,13 +176,13 @@ class TopupSuccessScreen extends StatelessWidget {
                   onPressed: () => Navigator.of(context)
                       .pushNamedAndRemoveUntil(AppRoutes.home, (_) => false),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
+                    backgroundColor: AppColors.secondary,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Kembali ke Beranda',
                     style: TextStyle(
                       fontSize: 16,

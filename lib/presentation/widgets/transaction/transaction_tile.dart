@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../data/models/transaction_model.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/utils/currency_formatter.dart';
@@ -17,6 +17,13 @@ class TransactionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isCredit = transaction.isCredit;
+    final subtitle = switch (transaction.type) {
+      TransactionType.qrisPayment || TransactionType.qrisPaylater =>
+        transaction.merchantName == null
+            ? DateFormatter.formatRelative(transaction.createdAt)
+            : '${transaction.merchantName} • ${DateFormatter.formatRelative(transaction.createdAt)}',
+      _ => DateFormatter.formatRelative(transaction.createdAt),
+    };
 
     return ListTile(
       onTap: onTap,
@@ -32,17 +39,17 @@ class TransactionTile extends StatelessWidget {
       ),
       title: Text(
         transaction.typeLabel,
-        style: const TextStyle(
+        style: TextStyle(
           fontWeight: FontWeight.w600,
           fontSize: 14,
-          color: AppColors.textPrimary,
+          color: Theme.of(context).colorScheme.onSurface,
         ),
       ),
       subtitle: Text(
-        DateFormatter.formatRelative(transaction.createdAt),
-        style: const TextStyle(
+        subtitle,
+        style: TextStyle(
           fontSize: 12,
-          color: AppColors.textSecondary,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
       ),
       trailing: Column(
@@ -59,9 +66,9 @@ class TransactionTile extends StatelessWidget {
           ),
           Text(
             transaction.refCode,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 10,
-              color: AppColors.textHint,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -79,6 +86,10 @@ class TransactionTile extends StatelessWidget {
         return Icons.arrow_upward_rounded;
       case TransactionType.bankTransfer:
         return Icons.account_balance;
+      case TransactionType.qrisPayment:
+        return Icons.qr_code_scanner_rounded;
+      case TransactionType.qrisPaylater:
+        return Icons.qr_code_2_rounded;
       case TransactionType.paylaterDisbursement:
         return Icons.credit_score;
       case TransactionType.paylaterPayment:
@@ -96,6 +107,8 @@ class TransactionTile extends StatelessWidget {
         return AppColors.income;
       case TransactionType.transferOut:
       case TransactionType.bankTransfer:
+      case TransactionType.qrisPayment:
+      case TransactionType.qrisPaylater:
       case TransactionType.paylaterPayment:
       case TransactionType.withdrawal:
         return AppColors.expense;

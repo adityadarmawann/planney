@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/wallet_provider.dart';
@@ -114,7 +114,7 @@ class _TopupScreenState extends State<TopupScreen> {
     final balance = context.watch<WalletProvider>().balance;
 
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.topupWallet)),
+      appBar: AppBar(title: Text(AppStrings.topupWallet)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -123,26 +123,26 @@ class _TopupScreenState extends State<TopupScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.primaryLightest,
+                color: AppColors.secondaryLight.withValues(alpha: 0.22),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.account_balance_wallet,
-                      color: AppColors.primary),
+                  Icon(Icons.account_balance_wallet,
+                      color: AppColors.secondary),
                   const SizedBox(width: 12),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Saldo Saat Ini',
+                      Text('Saldo Saat Ini',
                           style: TextStyle(
-                              color: AppColors.textSecondary, fontSize: 12)),
+                              color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 12)),
                       Text(
                         CurrencyFormatter.format(balance),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
+                          color: AppColors.secondary,
                         ),
                       ),
                     ],
@@ -151,7 +151,7 @@ class _TopupScreenState extends State<TopupScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
+            Text(
               'Pilih Nominal',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
@@ -179,12 +179,12 @@ class _TopupScreenState extends State<TopupScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: isSelected
-                          ? AppColors.primary
-                          : AppColors.backgroundSecondary,
+                          ? AppColors.secondary
+                          : Theme.of(context).colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
                         color: isSelected
-                            ? AppColors.primary
+                            ? AppColors.secondary
                             : AppColors.border,
                       ),
                     ),
@@ -195,8 +195,8 @@ class _TopupScreenState extends State<TopupScreen> {
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: isSelected
-                              ? Colors.white
-                              : AppColors.textPrimary,
+                              ? AppColors.textOnPrimary
+                              : AppColors.getTextPrimary(Theme.of(context).brightness),
                         ),
                       ),
                     ),
@@ -205,9 +205,9 @@ class _TopupScreenState extends State<TopupScreen> {
               },
             ),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'Atau masukkan nominal lain',
-              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+              style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
             const SizedBox(height: 8),
             TextFormField(
@@ -218,7 +218,6 @@ class _TopupScreenState extends State<TopupScreen> {
                 prefixText: 'Rp ',
                 hintText: '0',
                 filled: true,
-                fillColor: AppColors.backgroundSecondary,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: AppColors.border),
@@ -226,12 +225,12 @@ class _TopupScreenState extends State<TopupScreen> {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(
-                    color: _useCustom ? AppColors.primary : AppColors.border,
+                    color: _useCustom ? AppColors.secondary : AppColors.border,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.primary),
+                  borderSide: const BorderSide(color: AppColors.secondary),
                 ),
               ),
               onChanged: (v) {
@@ -242,7 +241,7 @@ class _TopupScreenState extends State<TopupScreen> {
               },
             ),
             const SizedBox(height: 32),
-            const Text(
+            Text(
               'Pilih Sumber Top Up',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
@@ -252,7 +251,6 @@ class _TopupScreenState extends State<TopupScreen> {
               decoration: InputDecoration(
                 hintText: 'Pilih sumber top up',
                 filled: true,
-                fillColor: AppColors.backgroundSecondary,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: AppColors.border),
@@ -263,7 +261,7 @@ class _TopupScreenState extends State<TopupScreen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.primary),
+                  borderSide: const BorderSide(color: AppColors.secondary),
                 ),
               ),
               items: _topupSources.map((source) {
@@ -279,8 +277,8 @@ class _TopupScreenState extends State<TopupScreen> {
                   });
                 }
               },
-              icon: const Icon(Icons.expand_more, color: AppColors.primary),
-              dropdownColor: AppColors.backgroundSecondary,
+              icon: Icon(Icons.expand_more, color: AppColors.secondary),
+              dropdownColor: Theme.of(context).colorScheme.surface,
               isExpanded: true,
             ),
             const SizedBox(height: 32),

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+﻿import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
@@ -236,16 +236,16 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
     final isLoading = context.watch<ExpensePlanProvider>().isLoading;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(widget.plan == null
             ? 'Tambah Rencana Pengeluaran'
             : 'Edit Rencana Pengeluaran'),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -273,7 +273,7 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
                 controller: _amountController,
                 keyboardType: TextInputType.number,
                 validator: Validators.validateAmount,
-                prefix: const Icon(Icons.money, color: AppColors.textHint),
+                prefix: Icon(Icons.money, color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
               const SizedBox(height: 16),
 
@@ -334,7 +334,7 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.primaryLightest),
+          border: Border.all(color: AppColors.border),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -343,25 +343,25 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Tanggal Pengeluaran',
                   style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   _selectedDate?.toString().split(' ')[0] ?? 'Pilih tanggal',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
             ),
-            const Icon(Icons.calendar_today, color: AppColors.primary),
+            Icon(Icons.calendar_today, color: AppColors.secondary),
           ],
         ),
       ),
@@ -374,7 +374,7 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.primaryLightest),
+          border: Border.all(color: AppColors.border),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -383,25 +383,25 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Jam Pengeluaran',
                   style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   _formatTimeOfDay(_selectedExpenseTime),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
             ),
-            const Icon(Icons.access_time, color: AppColors.primary),
+            Icon(Icons.access_time, color: AppColors.secondary),
           ],
         ),
       ),
@@ -412,18 +412,18 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Kategori',
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: AppColors.textSecondary,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            border: Border.all(color: AppColors.primaryLightest),
+            border: Border.all(color: AppColors.border),
             borderRadius: BorderRadius.circular(12),
           ),
           child: DropdownButton<String>(
@@ -455,18 +455,18 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Sumber Pembayaran',
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: AppColors.textSecondary,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            border: Border.all(color: AppColors.primaryLightest),
+            border: Border.all(color: AppColors.border),
             borderRadius: BorderRadius.circular(12),
           ),
           child: DropdownButton<String>(
@@ -514,9 +514,9 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
                   children: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Batal'),
+                      child: Text('Batal'),
                     ),
-                    const Text(
+                    Text(
                       'Durasi Pengingat',
                       style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
                     ),
@@ -526,7 +526,7 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
                             _customReminderMinutes = (tempHours * 60) + tempMinutes);
                         Navigator.pop(context);
                       },
-                      child: const Text('Selesai'),
+                      child: Text('Selesai'),
                     ),
                   ],
                 ),
@@ -549,7 +549,7 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
                           (i) => Center(
                             child: Text(
                               i.toString().padLeft(2, '0'),
-                              style: const TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 20),
                             ),
                           ),
                         ),
@@ -572,7 +572,7 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
                           (i) => Center(
                             child: Text(
                               (i * 5).toString().padLeft(2, '0'),
-                              style: const TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 20),
                             ),
                           ),
                         ),
@@ -592,18 +592,18 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Pengingat',
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: AppColors.textSecondary,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            border: Border.all(color: AppColors.primaryLightest),
+            border: Border.all(color: AppColors.border),
             borderRadius: BorderRadius.circular(12),
           ),
           child: DropdownButton<String>(
@@ -611,7 +611,7 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
             isExpanded: true,
             underline: const SizedBox.shrink(),
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            hint: const Text('Pilih pengingat (opsional)'),
+            hint: Text('Pilih pengingat (opsional)'),
             items: [
               const DropdownMenuItem(
                 value: null,
@@ -647,7 +647,7 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.primaryLightest),
+                border: Border.all(color: AppColors.border),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -656,9 +656,9 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Durasi Pengingat (jam:menit sebelum pengeluaran)',
-                        style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                        style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
                       ),
                       const SizedBox(height: 4),
                       Text(
@@ -672,7 +672,7 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
                       ),
                     ],
                   ),
-                  const Icon(Icons.access_time, color: AppColors.textHint),
+                  Icon(Icons.access_time, color: Theme.of(context).colorScheme.onSurfaceVariant),
                 ],
               ),
             ),
@@ -686,19 +686,19 @@ class _ExpensePlanCreateScreenState extends State<ExpensePlanCreateScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Hapus Rencana Pengeluaran?'),
-        content: const Text('Tindakan ini tidak dapat dibatalkan.'),
+        title: Text('Hapus Rencana Pengeluaran?'),
+        content: Text('Tindakan ini tidak dapat dibatalkan.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Batal'),
+            child: Text('Batal'),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               _delete();
             },
-            child: const Text('Hapus', style: TextStyle(color: Colors.red)),
+            child: Text('Hapus', style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../data/models/transaction_model.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/utils/currency_formatter.dart';
@@ -16,9 +16,9 @@ class TransactionDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail Transaksi'),
+        title: Text('Detail Transaksi'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -34,8 +34,8 @@ class TransactionDetailScreen extends StatelessWidget {
                 gradient: isCredit
                     ? LinearGradient(
                         colors: [
-                          AppColors.success,
-                          AppColors.success.withValues(alpha: 0.7)
+                          AppColors.primary,
+                          AppColors.secondary,
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -62,13 +62,13 @@ class TransactionDetailScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   Text(
                     tx.typeLabel,
-                    style: const TextStyle(
+                    style: TextStyle(
                         color: Colors.white70, fontSize: 14),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     '${isCredit ? '+' : '-'}${CurrencyFormatter.format(tx.amount)}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -77,7 +77,7 @@ class TransactionDetailScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     DateFormatter.formatDateTime(tx.createdAt),
-                    style: const TextStyle(
+                    style: TextStyle(
                         color: Colors.white70, fontSize: 12),
                   ),
                 ],
@@ -197,21 +197,21 @@ class _DetailRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label,
-            style: const TextStyle(
-                color: AppColors.textSecondary, fontSize: 14)),
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 14)),
         const SizedBox(width: 16),
         isCode
             ? Container(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryLightest,
+                  color: AppColors.secondaryLight.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
                   value,
-                  style: const TextStyle(
-                    color: AppColors.primary,
+                  style: TextStyle(
+                    color: AppColors.secondary,
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 1,

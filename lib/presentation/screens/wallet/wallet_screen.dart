@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/wallet_provider.dart';
 import '../../../core/constants/app_colors.dart';
@@ -14,10 +14,11 @@ class WalletScreen extends StatelessWidget {
     final wallet = context.watch<WalletProvider>().wallet;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Dompet Digital')),
+      appBar: AppBar(title: Text('Dompet Digital')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Balance card
             Container(
@@ -25,26 +26,34 @@ class WalletScreen extends StatelessWidget {
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 gradient: AppColors.cardGradient,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(24),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.shadow,
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
+                    color: AppColors.primaryDark.withValues(alpha: 0.18),
+                    blurRadius: 18,
+                    offset: const Offset(0, 8),
                   ),
                 ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Saldo Kamu',
                     style: TextStyle(color: Colors.white70, fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Siap dipakai kapan saja',
+                    style: TextStyle(
+                      color: Colors.white60,
+                      fontSize: 12,
+                    ),
                   ),
                   const SizedBox(height: 12),
                   Text(
                     CurrencyFormatter.format(wallet?.balance ?? 0),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -58,14 +67,14 @@ class WalletScreen extends StatelessWidget {
                         child: ElevatedButton.icon(
                           onPressed: () => Navigator.pushNamed(
                               context, AppRoutes.topup),
-                          icon: const Icon(Icons.add, size: 18),
-                          label: const Text('Top Up'),
+                          icon: Icon(Icons.add, size: 18),
+                          label: Text('Top Up'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
-                            foregroundColor: AppColors.primary,
+                            foregroundColor: AppColors.secondary,
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                         ),
@@ -75,14 +84,17 @@ class WalletScreen extends StatelessWidget {
                         child: ElevatedButton.icon(
                           onPressed: () => Navigator.pushNamed(
                               context, AppRoutes.transfer),
-                          icon: const Icon(Icons.send, size: 18),
-                          label: const Text('Transfer'),
+                          icon: Icon(Icons.send, size: 18),
+                          label: Text('Transfer'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white.withValues(alpha: 0.2),
                             foregroundColor: Colors.white,
+                            side: BorderSide(
+                              color: Colors.white.withValues(alpha: 0.45),
+                            ),
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                         ),
@@ -93,11 +105,19 @@ class WalletScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 28),
+            Text(
+              'Ringkasan Dompet',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+            ),
+            const SizedBox(height: 10),
             SpCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Informasi Dompet',
                     style: TextStyle(
                       fontSize: 16,
@@ -137,8 +157,8 @@ class _InfoRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(label,
-            style: const TextStyle(
-                color: AppColors.textSecondary, fontSize: 14)),
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 14)),
         Text(value,
             style: TextStyle(
               fontWeight: FontWeight.w600,

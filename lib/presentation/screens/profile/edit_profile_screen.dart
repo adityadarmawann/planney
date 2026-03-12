@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/user_provider.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/utils/validators.dart';
 import '../../widgets/common/sp_button.dart';
@@ -75,9 +74,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.editProfile),
+        title: Text(AppStrings.editProfile),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -93,16 +92,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 controller: _fullNameController,
                 validator: (v) =>
                     Validators.validateRequired(v, 'Nama lengkap'),
-                prefix: const Icon(Icons.person_outline,
-                    color: AppColors.textHint),
+                prefix: Icon(Icons.person_outline,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
               const SizedBox(height: 16),
               SpTextField(
                 label: AppStrings.username,
                 controller: _usernameController,
                 validator: Validators.validateUsername,
-                prefix: const Icon(Icons.alternate_email,
-                    color: AppColors.textHint),
+                prefix: Icon(Icons.alternate_email,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
               const SizedBox(height: 16),
               SpTextField(
@@ -111,8 +110,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,
                 validator: Validators.validatePhone,
-                prefix: const Icon(Icons.phone_outlined,
-                    color: AppColors.textHint),
+                prefix: Icon(Icons.phone_outlined,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
               const SizedBox(height: 32),
               SpButton(

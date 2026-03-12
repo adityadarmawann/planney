@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/paylater_provider.dart';
@@ -64,7 +64,7 @@ class _PaylaterApplyScreenState extends State<PaylaterApplyScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Konfirmasi Pencairan'),
+        title: Text('Konfirmasi Pencairan'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -73,7 +73,7 @@ class _PaylaterApplyScreenState extends State<PaylaterApplyScreen> {
             const SizedBox(height: 8),
             Text(
               'Total tagihan: ${CurrencyFormatter.format(_totalDue)}',
-              style: const TextStyle(
+              style: TextStyle(
                   color: AppColors.warning, fontWeight: FontWeight.w600),
             ),
           ],
@@ -81,11 +81,11 @@ class _PaylaterApplyScreenState extends State<PaylaterApplyScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Batal'),
+            child: Text('Batal'),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Cairkan'),
+            child: Text('Cairkan'),
           ),
         ],
       ),
@@ -130,9 +130,9 @@ class _PaylaterApplyScreenState extends State<PaylaterApplyScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cairkan Dana Paylater'),
+        title: Text('Cairkan Dana Paylater'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -146,25 +146,25 @@ class _PaylaterApplyScreenState extends State<PaylaterApplyScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryLightest,
+                  color: AppColors.secondaryLight.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.credit_score, color: AppColors.primary),
+                    Icon(Icons.credit_score, color: AppColors.secondary),
                     const SizedBox(width: 12),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Sisa Limit',
+                        Text('Sisa Limit',
                             style: TextStyle(
-                                color: AppColors.textSecondary, fontSize: 12)),
+                                color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 12)),
                         Text(
                           CurrencyFormatter.format(account.remainingLimit),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.primary,
+                            color: AppColors.secondary,
                           ),
                         ),
                       ],
@@ -173,7 +173,7 @@ class _PaylaterApplyScreenState extends State<PaylaterApplyScreen> {
                 ),
               ),
             const SizedBox(height: 24),
-            const Text('Jumlah Pencairan',
+            Text('Jumlah Pencairan',
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
             const SizedBox(height: 8),
             TextFormField(
@@ -188,7 +188,6 @@ class _PaylaterApplyScreenState extends State<PaylaterApplyScreen> {
                 prefixText: 'Rp ',
                 hintText: '0',
                 filled: true,
-                fillColor: AppColors.backgroundSecondary,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: AppColors.border),
@@ -199,12 +198,12 @@ class _PaylaterApplyScreenState extends State<PaylaterApplyScreen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.primary),
+                  borderSide: const BorderSide(color: AppColors.secondary),
                 ),
               ),
             ),
             const SizedBox(height: 20),
-            const Text('Pilih Tenor',
+            Text('Pilih Tenor',
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
             const SizedBox(height: 8),
             Wrap(
@@ -219,12 +218,12 @@ class _PaylaterApplyScreenState extends State<PaylaterApplyScreen> {
                         horizontal: 20, vertical: 10),
                     decoration: BoxDecoration(
                       color: isSelected
-                          ? AppColors.primary
-                          : AppColors.backgroundSecondary,
+                          ? AppColors.secondary
+                          : Theme.of(context).colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
                         color: isSelected
-                            ? AppColors.primary
+                            ? AppColors.secondary
                             : AppColors.border,
                       ),
                     ),
@@ -246,7 +245,7 @@ class _PaylaterApplyScreenState extends State<PaylaterApplyScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppColors.backgroundSecondary,
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: AppColors.border),
                 ),
@@ -265,7 +264,7 @@ class _PaylaterApplyScreenState extends State<PaylaterApplyScreen> {
                     _SummaryRow(
                       label: 'Total Tagihan',
                       value: CurrencyFormatter.format(_totalDue),
-                      valueColor: AppColors.primary,
+                      valueColor: AppColors.secondary,
                       isBold: true,
                     ),
                   ],
@@ -304,8 +303,8 @@ class _SummaryRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(label,
-            style: const TextStyle(
-                color: AppColors.textSecondary, fontSize: 13)),
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 13)),
         Text(
           value,
           style: TextStyle(

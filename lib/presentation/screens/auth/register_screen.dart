@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/wallet_provider.dart';
@@ -93,12 +93,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final isLoading = context.watch<AuthProvider>().isLoading;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -108,20 +108,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Buat Akun Baru 🎉',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
+              Text(
                 'Bergabung dengan Planney sekarang',
                 style: TextStyle(
                   fontSize: 14,
-                  color: AppColors.textSecondary,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: 32),
@@ -135,8 +135,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: _fullNameController,
                       validator: (v) =>
                           Validators.validateRequired(v, 'Nama lengkap'),
-                      prefix: const Icon(Icons.person_outline,
-                          color: AppColors.textHint),
+                      prefix: Icon(Icons.person_outline,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                     const SizedBox(height: 16),
                     SpTextField(
@@ -144,8 +144,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       hint: 'username_kamu',
                       controller: _usernameController,
                       validator: Validators.validateUsername,
-                      prefix: const Icon(Icons.alternate_email,
-                          color: AppColors.textHint),
+                      prefix: Icon(Icons.alternate_email,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                     const SizedBox(height: 16),
                     SpTextField(
@@ -154,8 +154,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       validator: Validators.validateEmail,
-                      prefix: const Icon(Icons.email_outlined,
-                          color: AppColors.textHint),
+                      prefix: Icon(Icons.email_outlined,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                     const SizedBox(height: 16),
                     SpTextField(
@@ -164,8 +164,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: _passwordController,
                       obscureText: true,
                       validator: Validators.validatePassword,
-                      prefix: const Icon(Icons.lock_outline,
-                          color: AppColors.textHint),
+                      prefix: Icon(Icons.lock_outline,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                     const SizedBox(height: 16),
                     SpTextField(
@@ -175,8 +175,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       obscureText: true,
                       validator: (v) => Validators.validateConfirmPassword(
                           v, _passwordController.text),
-                      prefix: const Icon(Icons.lock_outline,
-                          color: AppColors.textHint),
+                      prefix: Icon(Icons.lock_outline,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant),
                       textInputAction: TextInputAction.done,
                     ),
                     const SizedBox(height: 24),
@@ -193,7 +193,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
                             'atau',
-                            style: TextStyle(color: AppColors.textHint),
+                            style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                           ),
                         ),
                         const Expanded(child: Divider()),
@@ -205,8 +205,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onPressed: _registerWithGoogle,
                       isOutlined: true,
                       isLoading: isLoading,
-                      prefix: const Icon(Icons.g_mobiledata,
-                          color: AppColors.primary, size: 24),
+                      prefix: Icon(Icons.g_mobiledata,
+                          color: AppColors.secondary, size: 24),
                     ),
                   ],
                 ),
@@ -215,16 +215,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     AppStrings.hasAccount,
-                    style: TextStyle(color: AppColors.textSecondary),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
-                    child: const Text(
+                    child: Text(
                       AppStrings.loginHere,
                       style: TextStyle(
-                        color: AppColors.primary,
+                        color: AppColors.secondary,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

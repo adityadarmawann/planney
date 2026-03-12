@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/utils/currency_formatter.dart';
 
@@ -36,12 +36,12 @@ class PaymentMethodSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Metode Pembayaran',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 14),
@@ -71,19 +71,19 @@ class PaymentMethodSelector extends StatelessWidget {
         // Tenor Selector (only shown when PayLater selected)
         if (selectedMethod == PaymentMethod.paylater) ...[
           const SizedBox(height: 20),
-          const Text(
+          Text(
             'Pilih Tenor Cicilan',
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 8),
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.backgroundSecondary,
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: AppColors.border),
             ),
@@ -142,13 +142,13 @@ class PaymentMethodSelector extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.info_outline,
+                      Icon(Icons.info_outline,
                           size: 16, color: AppColors.warning),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           'Bayar sebelum ${_getDueDate()}',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 11,
                             color: AppColors.warning,
                             fontWeight: FontWeight.w500,
@@ -199,16 +199,16 @@ class _PaymentMethodCard extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: !isEnabled
-              ? AppColors.backgroundSecondary
+              ? Theme.of(context).colorScheme.surfaceContainerHighest
               : isSelected
-                  ? AppColors.primaryLightest
-                  : Colors.white,
+                  ? AppColors.secondaryLight.withValues(alpha: 0.2)
+                  : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: !isEnabled
                 ? AppColors.border
                 : isSelected
-                    ? AppColors.primary
+                    ? AppColors.secondary
                     : AppColors.border,
             width: isSelected ? 2 : 1,
           ),
@@ -222,8 +222,8 @@ class _PaymentMethodCard extends StatelessWidget {
                 color: !isEnabled
                     ? AppColors.textHint.withValues(alpha: 0.1)
                     : isSelected
-                        ? AppColors.primary.withValues(alpha: 0.15)
-                        : AppColors.backgroundSecondary,
+                      ? AppColors.secondary.withValues(alpha: 0.15)
+                      : Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
@@ -231,7 +231,7 @@ class _PaymentMethodCard extends StatelessWidget {
                 color: !isEnabled
                     ? AppColors.textHint
                     : isSelected
-                        ? AppColors.primary
+                        ? AppColors.secondary
                         : AppColors.textSecondary,
                 size: 22,
               ),
@@ -265,9 +265,9 @@ class _PaymentMethodCard extends StatelessWidget {
               ),
             ),
             if (isSelected)
-              const Icon(
+              Icon(
                 Icons.check_circle,
-                color: AppColors.primary,
+                color: AppColors.secondary,
                 size: 22,
               ),
           ],
@@ -299,7 +299,7 @@ class _DetailRow extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: AppColors.textSecondary,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
             fontWeight: isBold ? FontWeight.w600 : FontWeight.normal,
           ),
         ),

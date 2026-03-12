@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../providers/auth_provider.dart';
@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final isLoading = context.watch<AuthProvider>().isLoading;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -138,20 +138,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 32),
-              const Text(
+              Text(
                 'Selamat Datang! 👋',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
+              Text(
                 'Masuk ke akun Planney kamu',
                 style: TextStyle(
                   fontSize: 14,
-                  color: AppColors.textSecondary,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: 40),
@@ -165,8 +165,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       validator: Validators.validateEmail,
-                      prefix: const Icon(Icons.email_outlined,
-                          color: AppColors.textHint),
+                      prefix: Icon(Icons.email_outlined,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                     const SizedBox(height: 16),
                     SpTextField(
@@ -175,8 +175,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: _passwordController,
                       obscureText: true,
                       validator: Validators.validatePassword,
-                      prefix: const Icon(Icons.lock_outline,
-                          color: AppColors.textHint),
+                      prefix: Icon(Icons.lock_outline,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant),
                       textInputAction: TextInputAction.done,
                     ),
                     const SizedBox(height: 8),
@@ -184,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: () {},
-                        child: const Text(AppStrings.forgotPassword),
+                        child: Text(AppStrings.forgotPassword),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -201,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
                             'atau',
-                            style: TextStyle(color: AppColors.textHint),
+                            style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                           ),
                         ),
                         const Expanded(child: Divider()),
@@ -213,8 +213,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: _loginWithGoogle,
                       isOutlined: true,
                       isLoading: isLoading,
-                      prefix: const Icon(Icons.g_mobiledata,
-                          color: AppColors.primary, size: 24),
+                      prefix: Icon(Icons.g_mobiledata,
+                          color: AppColors.secondary, size: 24),
                     ),
                   ],
                 ),
@@ -223,17 +223,17 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     AppStrings.noAccount,
-                    style: TextStyle(color: AppColors.textSecondary),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                   GestureDetector(
                     onTap: () =>
                         Navigator.pushNamed(context, AppRoutes.register),
-                    child: const Text(
+                    child: Text(
                       AppStrings.registerHere,
                       style: TextStyle(
-                        color: AppColors.primary,
+                        color: AppColors.secondary,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

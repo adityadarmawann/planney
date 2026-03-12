@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
@@ -43,6 +43,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
   Widget build(BuildContext context) {
     final provider = context.watch<BudgetProvider>();
     final expensePlanProvider = context.watch<ExpensePlanProvider>();
+    final colorScheme = Theme.of(context).colorScheme;
     
     // Filter: hanya tampilkan yang belum completed di list utama
     final monthlyPlans = expensePlanProvider.expensePlans
@@ -52,7 +53,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Plan'),
+        title: Text('My Plan'),
         actions: [
           Consumer<ExpensePlanProvider>(
             builder: (context, expensePlanProvider, _) {
@@ -69,7 +70,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                 icon: Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    const Icon(Icons.calendar_month_rounded),
+                    Icon(Icons.calendar_month_rounded),
                     if (planCount > 0)
                       Positioned(
                         right: -6,
@@ -88,7 +89,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                           child: Text(
                             planCount > 99 ? '99+' : '$planCount',
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -113,12 +114,12 @@ class _BudgetScreenState extends State<BudgetScreen> {
                 padding: const EdgeInsets.all(20),
                 children: [
                   if (monthlyPlans.isNotEmpty) ...[
-                    const Text(
+                    Text(
                       'Rencana Pengeluaran Bulan Ini',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -140,12 +141,12 @@ class _BudgetScreenState extends State<BudgetScreen> {
                   ],
                   // Ringkasan Saku Anggaran
                   if (provider.budgets.isNotEmpty) ...[  
-                    const Text(
+                    Text(
                       'Ringkasan Saku Anggaran',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -204,7 +205,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                               ),
                               const Divider(height: 24),
                               _SummaryRow(
-                                color: AppColors.primary,
+                                color: AppColors.secondary,
                                 label: 'Sisa Saldo',
                                 value: CurrencyFormatter.format(totalIncome - totalExpense),
                                 isTotal: true,
@@ -216,12 +217,12 @@ class _BudgetScreenState extends State<BudgetScreen> {
                     ),
                     const SizedBox(height: 24),
                   ],
-                  const Text(
+                  Text(
                     'Saku Anggaran',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -232,13 +233,13 @@ class _BudgetScreenState extends State<BudgetScreen> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(Icons.pie_chart_outline,
-                                size: 64, color: AppColors.textHint),
+                            Icon(Icons.pie_chart_outline,
+                                size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
                             const SizedBox(height: 16),
-                            const Text(
+                                Text(
                               'Belum ada anggaran',
                               style: TextStyle(
-                                  color: AppColors.textSecondary, fontSize: 16),
+                                  color: colorScheme.onSurfaceVariant, fontSize: 16),
                             ),
                           ],
                         ),
@@ -269,8 +270,8 @@ class _BudgetScreenState extends State<BudgetScreen> {
         onPressed: () =>
             Navigator.pushNamed(context, AppRoutes.budgetCreate)
                 .then((_) => _loadData()),
-        backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add, color: Colors.white),
+        backgroundColor: AppColors.secondary,
+        child: Icon(Icons.add, color: Colors.white),
       ),
     );
   }
@@ -280,16 +281,16 @@ class _BudgetScreenState extends State<BudgetScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Hapus Anggaran'),
+        title: Text('Hapus Anggaran'),
         content: Text('Hapus anggaran "${budget.name}"?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Batal'),
+            child: Text('Batal'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Hapus',
+            child: Text('Hapus',
                 style: TextStyle(color: AppColors.error)),
           ),
         ],
@@ -323,6 +324,7 @@ class _ExpensePlanMiniCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SpCard(
       child: Row(
         children: [
@@ -332,12 +334,12 @@ class _ExpensePlanMiniCard extends StatelessWidget {
             decoration: BoxDecoration(
               color: isCompleted
                   ? AppColors.success.withValues(alpha: 0.12)
-                  : AppColors.primary.withValues(alpha: 0.12),
+                  : AppColors.secondary.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               isCompleted ? Icons.check_rounded : Icons.schedule_rounded,
-              color: isCompleted ? AppColors.success : AppColors.primary,
+              color: isCompleted ? AppColors.success : AppColors.secondary,
             ),
           ),
           const SizedBox(width: 12),
@@ -349,26 +351,26 @@ class _ExpensePlanMiniCard extends StatelessWidget {
                   title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 3),
                 Text(
                   '${DateFormatter.formatDate(plannedDate)} • $category',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.textSecondary,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   'Sumber: $paymentSource',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 11,
-                    color: AppColors.textHint,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],
@@ -380,10 +382,10 @@ class _ExpensePlanMiniCard extends StatelessWidget {
             children: [
               Text(
                 CurrencyFormatter.format(amount),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.primary,
+                  color: AppColors.secondary,
                 ),
               ),
             ],
@@ -407,6 +409,7 @@ class _BudgetCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final percent = budget.percentageUsed;
     final progressColor = percent >= 90
         ? AppColors.error
@@ -428,7 +431,7 @@ class _BudgetCard extends StatelessWidget {
                   children: [
                     Text(
                       budget.name,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -436,14 +439,14 @@ class _BudgetCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       '${budget.periodTypeLabel} • ${DateFormatter.formatDate(budget.startDate)} - ${DateFormatter.formatDate(budget.endDate)}',
-                      style: const TextStyle(
-                          color: AppColors.textSecondary, fontSize: 12),
+                      style: TextStyle(
+                          color: colorScheme.onSurfaceVariant, fontSize: 12),
                     ),
                   ],
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.delete_outline,
+                icon: Icon(Icons.delete_outline,
                     color: AppColors.error, size: 20),
                 onPressed: onDelete,
               ),
@@ -456,12 +459,11 @@ class _BudgetCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Pemasukan',
-                        style: TextStyle(
-                            color: AppColors.textHint, fontSize: 11)),
+                    Text('Pemasukan',
+                        style: TextStyle(color: colorScheme.onSurfaceVariant, fontSize: 11)),
                     Text(
                       CurrencyFormatter.format(budget.totalIncome),
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.income,
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
@@ -474,12 +476,11 @@ class _BudgetCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Pengeluaran',
-                        style: TextStyle(
-                            color: AppColors.textHint, fontSize: 11)),
+                    Text('Pengeluaran',
+                        style: TextStyle(color: colorScheme.onSurfaceVariant, fontSize: 11)),
                     Text(
                       CurrencyFormatter.format(budget.totalExpense),
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.expense,
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
@@ -492,14 +493,13 @@ class _BudgetCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Sisa',
-                        style: TextStyle(
-                            color: AppColors.textHint, fontSize: 11)),
+                    Text('Sisa',
+                        style: TextStyle(color: colorScheme.onSurfaceVariant, fontSize: 11)),
                     Text(
                       CurrencyFormatter.format(budget.remaining),
                       style: TextStyle(
                         color: budget.remaining >= 0
-                            ? AppColors.primary
+                            ? AppColors.secondary
                             : AppColors.error,
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
@@ -550,6 +550,7 @@ class _SummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
         Container(
@@ -567,7 +568,7 @@ class _SummaryRow extends StatelessWidget {
             style: TextStyle(
               fontSize: isTotal ? 14 : 13,
               fontWeight: isTotal ? FontWeight.w600 : FontWeight.w500,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
         ),

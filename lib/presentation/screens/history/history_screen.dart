@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/transaction_provider.dart';
@@ -49,9 +49,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Riwayat Transaksi'),
+        title: Text('Riwayat Transaksi'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -77,12 +77,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         horizontal: 14, vertical: 6),
                     decoration: BoxDecoration(
                       color: isSelected
-                          ? AppColors.primary
-                          : AppColors.backgroundSecondary,
+                          ? AppColors.secondary
+                          : Theme.of(context).colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                         color: isSelected
-                            ? AppColors.primary
+                            ? AppColors.secondary
                             : AppColors.border,
                       ),
                     ),
@@ -106,17 +106,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
             child: provider.isLoading
                 ? const SpLoading()
                 : transactions.isEmpty
-                    ? const Center(
+                    ? Center(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(Icons.receipt_long,
-                                size: 56, color: AppColors.textHint),
+                                size: 56, color: Theme.of(context).colorScheme.onSurfaceVariant),
                             SizedBox(height: 12),
                             Text(
                               'Tidak ada transaksi',
                               style: TextStyle(
-                                  color: AppColors.textSecondary),
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant),
                             ),
                           ],
                         ),

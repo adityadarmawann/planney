@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/paylater_provider.dart';
@@ -49,9 +49,9 @@ class _PaylaterScreenState extends State<PaylaterScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Paylater'),
+        title: Text('PayLater'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -65,8 +65,6 @@ class _PaylaterScreenState extends State<PaylaterScreen> {
             children: [
               // Account card
               if (account != null) _buildAccountCard(account),
-              const SizedBox(height: 24),
-              
               const SizedBox(height: 24),
               
               // Overdue Bills (prioritas tertinggi)
@@ -96,14 +94,14 @@ class _PaylaterScreenState extends State<PaylaterScreen> {
               ],
               
               // Active Bills (belum jatuh tempo)
-              const Text(
+              Text(
                 'Tagihan Aktif',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 12),
               if (provider.activeBills.isEmpty && provider.overdueBills.isEmpty)
                 SpCard(
-                  child: const Center(
+                  child: Center(
                     child: Padding(
                       padding: EdgeInsets.all(24),
                       child: Column(
@@ -113,7 +111,7 @@ class _PaylaterScreenState extends State<PaylaterScreen> {
                           SizedBox(height: 12),
                           Text(
                             'Tidak ada tagihan aktif',
-                            style: TextStyle(color: AppColors.textSecondary),
+                            style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                           ),
                         ],
                       ),
@@ -131,7 +129,7 @@ class _PaylaterScreenState extends State<PaylaterScreen> {
               // Paid Bills (history)
               if (provider.paidBills.isNotEmpty) ...[
                 const SizedBox(height: 24),
-                const Text(
+                Text(
                   'Riwayat Pembayaran',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
@@ -146,7 +144,7 @@ class _PaylaterScreenState extends State<PaylaterScreen> {
                   const SizedBox(height: 8),
                   TextButton(
                     onPressed: () => Navigator.pushNamed(context, AppRoutes.paylaterBill),
-                    child: const Text('Lihat Semua Riwayat'),
+                    child: Text('Lihat Semua Riwayat'),
                   ),
                 ],
               ],
@@ -163,7 +161,14 @@ class _PaylaterScreenState extends State<PaylaterScreen> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: AppColors.cardGradient,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primaryDark.withValues(alpha: 0.2),
+            blurRadius: 18,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,7 +211,7 @@ class _PaylaterScreenState extends State<PaylaterScreen> {
           const SizedBox(height: 4),
           Text(
             'Terpakai ${account.usedPercentage.toStringAsFixed(0)}% | Bunga ${account.interestRate}%/bulan',
-            style: const TextStyle(color: Colors.white70, fontSize: 12),
+            style: TextStyle(color: Colors.white70, fontSize: 12),
           ),
           
           // Limit Increase Progress Tracker
@@ -219,9 +224,9 @@ class _PaylaterScreenState extends State<PaylaterScreen> {
             const SizedBox(height: 16),
             Row(
               children: [
-                const Icon(Icons.trending_up, color: Colors.white, size: 16),
+                Icon(Icons.trending_up, color: Colors.white, size: 16),
                 const SizedBox(width: 8),
-                const Text(
+                Text(
                   'Progress Kenaikan Limit',
                   style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700),
                 ),
@@ -257,7 +262,7 @@ class _PaylaterScreenState extends State<PaylaterScreen> {
                         account.onTimePaymentCount == 0
                           ? 'Bayar 3x tepat waktu untuk naik Rp 500rb'
                           : '${account.paymentsNeededForIncrease}x lagi bayar tepat waktu → Rp ${CurrencyFormatter.formatAsPlainText(account.creditLimit + 500000)}',
-                        style: const TextStyle(color: Colors.white70, fontSize: 12),
+                        style: TextStyle(color: Colors.white70, fontSize: 12),
                       ),
                     ],
                   ),
@@ -270,11 +275,11 @@ class _PaylaterScreenState extends State<PaylaterScreen> {
               children: [
                 Text(
                   'Total dibayar: ${account.totalPaidBills}x',
-                  style: const TextStyle(color: Colors.white60, fontSize: 12),
+                  style: TextStyle(color: Colors.white60, fontSize: 12),
                 ),
                 Text(
                   'Target max: Rp 10jt',
-                  style: const TextStyle(color: Colors.white60, fontSize: 12),
+                  style: TextStyle(color: Colors.white60, fontSize: 12),
                 ),
               ],
             ),
@@ -283,15 +288,15 @@ class _PaylaterScreenState extends State<PaylaterScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.2),
+                color: AppColors.secondaryLight.withValues(alpha: 0.24),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.verified, color: Colors.white, size: 16),
+                  Icon(Icons.verified, color: Colors.white, size: 16),
                   const SizedBox(width: 8),
-                  const Text(
+                  Text(
                     'Limit Maksimal Tercapai! 🎉',
                     style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
                   ),
@@ -323,18 +328,18 @@ class _PaylaterScreenState extends State<PaylaterScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Bayar Tagihan'),
+        title: Text('Bayar Tagihan'),
         content: Text(
           'Bayar tagihan sebesar ${CurrencyFormatter.format(bill.totalDue)} dari saldo wallet?',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Batal'),
+            child: Text('Batal'),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Bayar'),
+            child: Text('Bayar'),
           ),
         ],
       ),
@@ -376,9 +381,9 @@ class _LimitInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(color: Colors.white70, fontSize: 14)),
+        Text(label, style: TextStyle(color: Colors.white70, fontSize: 14)),
         Text(value,
-            style: const TextStyle(
+            style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.bold)),
@@ -411,17 +416,17 @@ class _BillCard extends StatelessWidget {
                 children: [
                   Text(
                     CurrencyFormatter.format(bill.totalDue),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     'Tenor: ${bill.tenorMonths} bulan',
-                    style: const TextStyle(
-                        color: AppColors.textSecondary, fontSize: 12),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 12),
                   ),
                 ],
               ),
@@ -432,7 +437,7 @@ class _BillCard extends StatelessWidget {
                     ? AppColors.successLight 
                     : isOverdue 
                       ? AppColors.errorLight 
-                      : AppColors.warningLight,
+                      : AppColors.secondaryLight.withValues(alpha: 0.35),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -442,7 +447,7 @@ class _BillCard extends StatelessWidget {
                       ? AppColors.success 
                       : isOverdue 
                         ? AppColors.error 
-                        : AppColors.warning,
+                        : AppColors.secondary,
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
@@ -494,7 +499,7 @@ class _BillCard extends StatelessWidget {
                     minimumSize: const Size(80, 36),
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                   ),
-                  child: const Text('Bayar', style: TextStyle(fontSize: 12)),
+                  child: Text('Bayar', style: TextStyle(fontSize: 12)),
                 ),
             ],
           ),
@@ -515,17 +520,17 @@ class _DetailChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: AppColors.backgroundSecondary,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         children: [
           Text(label,
-              style: const TextStyle(
-                  color: AppColors.textHint, fontSize: 10)),
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 10)),
           const SizedBox(height: 2),
           Text(value,
-              style: const TextStyle(
+              style: TextStyle(
                   fontWeight: FontWeight.w600, fontSize: 12)),
         ],
       ),

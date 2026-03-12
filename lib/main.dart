@@ -6,6 +6,7 @@ import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 import 'app.dart';
 import 'core/config/env_config.dart';
+import 'core/constants/app_colors.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +16,7 @@ Future<void> main() async {
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.white,
+      systemNavigationBarColor: AppColors.background,
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );
@@ -58,25 +59,35 @@ class _ConfigErrorApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.background,
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(32.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.warning_amber_rounded,
-                    size: 64, color: Colors.orange),
+                const Icon(
+                  Icons.warning_amber_rounded,
+                  size: 64,
+                  color: AppColors.warning,
+                ),
                 const SizedBox(height: 24),
                 const Text(
                   'Konfigurasi Belum Lengkap',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
                 Text(
                   EnvConfig.configErrorMessage,
-                  style: const TextStyle(fontSize: 14, color: Colors.grey),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: AppColors.textSecondary,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ],

@@ -1,16 +1,17 @@
 flutter_launcher_icons:
-  image_path: "assets/images/logo-planney-icon.png"
+  image_path: "assets/images/logo-planney.png"
   android: true
   ios: true
+  remove_alpha_ios: true
   web:
     generate: true
-    image_path: "assets/images/logo-planney-icon.png"
+    image_path: "assets/images/logo-planney.png"
     background_color: "#011D5D"
     theme_color: "#011D5D"
   windows:
     generate: true
-    image_path: "assets/images/logo-planney-icon.png"
+    image_path: "assets/images/logo-planney.png"
     icon_size: 256
   macos:
     generate: true
-    image_path: "assets/images/logo-planney-icon.png"
+    image_path: "assets/images/logo-planney.png"

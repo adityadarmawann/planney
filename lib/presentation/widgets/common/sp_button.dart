@@ -44,7 +44,7 @@ class SpButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor ?? AppColors.primary,
+          backgroundColor: backgroundColor ?? AppColors.secondary,
           foregroundColor: textColor ?? AppColors.textOnPrimary,
         ),
         child: _buildChild(),
@@ -59,7 +59,8 @@ class SpButton extends StatelessWidget {
         height: 20,
         child: CircularProgressIndicator(
           strokeWidth: 2,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          valueColor:
+              AlwaysStoppedAnimation<Color>(AppColors.textOnPrimary),
         ),
       );
     }

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/budget_provider.dart';
@@ -107,9 +107,9 @@ class _BudgetCreateScreenState extends State<BudgetCreateScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.createBudget),
+        title: Text(AppStrings.createBudget),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -128,7 +128,7 @@ class _BudgetCreateScreenState extends State<BudgetCreateScreen> {
                     Validators.validateRequired(v, 'Nama anggaran'),
               ),
               const SizedBox(height: 24),
-              const Text(AppStrings.periodType,
+              Text(AppStrings.periodType,
                   style: TextStyle(
                       fontSize: 14, fontWeight: FontWeight.w500)),
               const SizedBox(height: 8),
@@ -205,10 +205,10 @@ class _PeriodChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : AppColors.backgroundSecondary,
+          color: isSelected ? AppColors.secondary : Theme.of(context).colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.border,
+            color: isSelected ? AppColors.secondary : AppColors.border,
           ),
         ),
         child: Text(
@@ -242,7 +242,7 @@ class _DatePicker extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: AppColors.backgroundSecondary,
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: AppColors.border),
         ),
@@ -250,17 +250,17 @@ class _DatePicker extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(label,
-                style: const TextStyle(
-                    color: AppColors.textHint, fontSize: 11)),
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 11)),
             const SizedBox(height: 4),
             Row(
               children: [
-                const Icon(Icons.calendar_today,
-                    size: 14, color: AppColors.primary),
+                Icon(Icons.calendar_today,
+                    size: 14, color: AppColors.secondary),
                 const SizedBox(width: 6),
                 Text(
                   '${date.day}/${date.month}/${date.year}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
                   ),

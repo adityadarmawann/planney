@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
 
 class SpCard extends StatelessWidget {
   final Widget child;
@@ -25,16 +24,17 @@ class SpCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final card = Container(
       margin: margin,
       decoration: BoxDecoration(
-        color: color ?? AppColors.backgroundCard,
+        color: color ?? colorScheme.surface,
         borderRadius: borderRadius ?? BorderRadius.circular(16),
-        border: hasBorder ? Border.all(color: AppColors.border) : null,
+        border: hasBorder ? Border.all(color: colorScheme.outlineVariant) : null,
         boxShadow: elevation > 0
             ? [
                 BoxShadow(
-                  color: AppColors.shadow,
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: elevation * 4,
                   offset: Offset(0, elevation),
                 ),

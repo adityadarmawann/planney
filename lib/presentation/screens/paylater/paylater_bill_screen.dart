@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/paylater_provider.dart';
@@ -37,9 +37,9 @@ class _PaylaterBillScreenState extends State<PaylaterBillScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tagihan Paylater'),
+        title: Text('Tagihan Paylater'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -48,16 +48,16 @@ class _PaylaterBillScreenState extends State<PaylaterBillScreen> {
           : RefreshIndicator(
               onRefresh: _loadData,
               child: provider.bills.isEmpty
-                  ? const Center(
+                  ? Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(Icons.receipt_long,
-                              size: 56, color: AppColors.textHint),
+                              size: 56, color: Theme.of(context).colorScheme.onSurfaceVariant),
                           SizedBox(height: 12),
                           Text(
                             'Belum ada tagihan',
-                            style: TextStyle(color: AppColors.textSecondary),
+                            style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                           ),
                         ],
                       ),
@@ -98,18 +98,18 @@ class _PaylaterBillScreenState extends State<PaylaterBillScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Bayar Tagihan'),
+        title: Text('Bayar Tagihan'),
         content: Text(
           'Bayar ${CurrencyFormatter.format(bill.totalDue)} dari saldo wallet?',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Batal'),
+            child: Text('Batal'),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Bayar'),
+            child: Text('Bayar'),
           ),
         ],
       ),
@@ -167,7 +167,7 @@ class _BillItem extends StatelessWidget {
             children: [
               Text(
                 CurrencyFormatter.format(bill.totalDue),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -193,8 +193,8 @@ class _BillItem extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             'Tenor: ${bill.tenorMonths} bulan | Pokok: ${CurrencyFormatter.format(bill.principalAmount)}',
-            style: const TextStyle(
-                color: AppColors.textSecondary, fontSize: 12),
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 12),
           ),
           const SizedBox(height: 4),
           Row(
@@ -202,13 +202,13 @@ class _BillItem extends StatelessWidget {
             children: [
               Text(
                 'Jatuh Tempo: ${DateFormatter.formatDate(bill.dueDate)}',
-                style: const TextStyle(
-                    color: AppColors.textSecondary, fontSize: 12),
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 12),
               ),
               if (bill.status == BillStatus.paid && bill.paidAt != null)
                 Text(
                   'Dibayar: ${DateFormatter.formatDate(bill.paidAt!)}',
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: AppColors.success, fontSize: 11),
                 ),
             ],
@@ -222,7 +222,7 @@ class _BillItem extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(0, 40),
                 ),
-                child: const Text('Bayar Sekarang'),
+                child: Text('Bayar Sekarang'),
               ),
             ),
           ],
@@ -231,3 +231,4 @@ class _BillItem extends StatelessWidget {
     );
   }
 }
+

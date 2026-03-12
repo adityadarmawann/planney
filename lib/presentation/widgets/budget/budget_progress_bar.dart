@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/utils/currency_formatter.dart';
 
 class BudgetProgressBar extends StatelessWidget {
@@ -30,24 +29,24 @@ class BudgetProgressBar extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(icon, style: const TextStyle(fontSize: 16)),
+                Text(icon, style: TextStyle(fontSize: 16)),
                 const SizedBox(width: 8),
                 Text(
                   label,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
             ),
             Text(
               CurrencyFormatter.format(amount),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ],
@@ -65,9 +64,9 @@ class BudgetProgressBar extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           '${(percentage * 100).toStringAsFixed(0)}%',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 11,
-            color: AppColors.textHint,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
       ],

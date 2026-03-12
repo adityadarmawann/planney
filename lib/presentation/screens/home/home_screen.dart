@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/wallet_provider.dart';
 import '../../../providers/user_provider.dart';
 import '../../../providers/transaction_provider.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../widgets/home/balance_card.dart';
@@ -46,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final txProvider = context.watch<TransactionProvider>();
     final recentTx = txProvider.transactions.take(5).toList();
     final firstName = user?.fullName.split(' ').first ?? 'Pengguna';
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return RefreshIndicator(
       onRefresh: _loadData,
@@ -65,28 +65,47 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Text(
                       'Hai, $firstName 👋',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
+                    Text(
                       'Kelola keuanganmu dengan bijak',
                       style: TextStyle(
                         fontSize: 13,
-                        color: AppColors.textHint,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],
                 ),
                 // Planney logo
-                Image.asset(
-                  'assets/images/logo-planney.png',
-                  width: 48,
-                  height: 48,
-                  fit: BoxFit.contain,
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: isDarkMode ? Colors.white : Colors.white.withValues(alpha: 0.92),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.outlineVariant,
+                    ),
+                    boxShadow: isDarkMode
+                        ? [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.16),
+                              blurRadius: 12,
+                              offset: const Offset(0, 4),
+                            ),
+                          ]
+                        : [],
+                  ),
+                  child: Image.asset(
+                    'assets/images/logo-planney.png',
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ],
             ),
@@ -97,12 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
               userName: firstName,
             ),
             const SizedBox(height: 28),
-            const Text(
+            Text(
               AppStrings.quickActions,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 16),
@@ -122,12 +141,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 28),
             // Wallet Summary Chart
-            const Text(
+            Text(
               'Ringkasan Dompet',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 16),
@@ -141,18 +160,18 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   AppStrings.recentTransactions,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
                 TextButton(
                   onPressed: () =>
                       Navigator.pushNamed(context, AppRoutes.history),
-                  child: const Text(AppStrings.seeAll),
+                  child: Text(AppStrings.seeAll),
                 ),
               ],
             ),
@@ -160,18 +179,18 @@ class _HomeScreenState extends State<HomeScreen> {
             if (txProvider.isLoading)
               const SpLoading()
             else if (recentTx.isEmpty)
-              const SpCard(
+              SpCard(
                 child: Center(
                   child: Padding(
                     padding: EdgeInsets.all(24),
                     child: Column(
                       children: [
                         Icon(Icons.receipt_long,
-                            size: 48, color: AppColors.textHint),
+                            size: 48, color: Theme.of(context).colorScheme.onSurfaceVariant),
                         SizedBox(height: 12),
                         Text(
                           'Belum ada transaksi',
-                          style: TextStyle(color: AppColors.textSecondary),
+                          style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                         ),
                       ],
                     ),

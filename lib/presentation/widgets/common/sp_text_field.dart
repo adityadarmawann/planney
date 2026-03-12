@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../core/constants/app_colors.dart';
 
 class SpTextField extends StatefulWidget {
   final String label;
@@ -70,7 +69,7 @@ class _SpTextFieldState extends State<SpTextField> {
             ? IconButton(
                 icon: Icon(
                   _showPassword ? Icons.visibility_off : Icons.visibility,
-                  color: AppColors.textHint,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
                 onPressed: () {
                   setState(() {

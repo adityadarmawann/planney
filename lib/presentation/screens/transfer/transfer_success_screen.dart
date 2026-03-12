@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/utils/currency_formatter.dart';
@@ -15,7 +15,7 @@ class TransferSuccessScreen extends StatelessWidget {
     final type = args['type'] as String;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(32),
@@ -29,19 +29,19 @@ class TransferSuccessScreen extends StatelessWidget {
                   color: AppColors.successLight,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.check_circle,
                   size: 60,
                   color: AppColors.success,
                 ),
               ),
               const SizedBox(height: 24),
-              const Text(
+              Text(
                 'Berhasil! 🎉',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
@@ -51,9 +51,9 @@ class TransferSuccessScreen extends StatelessWidget {
                     : type == 'bank'
                         ? 'Transfer bank berhasil'
                         : 'Transfer berhasil dikirim',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
-                  color: AppColors.textSecondary,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -62,24 +62,24 @@ class TransferSuccessScreen extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: AppColors.backgroundSecondary,
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.border),
                 ),
                 child: Column(
                   children: [
-                    const Text(
+                    Text(
                       'Jumlah',
                       style: TextStyle(
-                          color: AppColors.textSecondary, fontSize: 13),
+                          color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 13),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       CurrencyFormatter.format(amount),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
+                        color: AppColors.secondary,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -87,24 +87,24 @@ class TransferSuccessScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
                       decoration: BoxDecoration(
-                        color: AppColors.primaryLightest,
+                        color: AppColors.secondaryLight.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
                         refCode,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.primary,
+                          color: AppColors.secondary,
                           letterSpacing: 1,
                         ),
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
+                    Text(
                       'Kode Referensi',
                       style: TextStyle(
-                          color: AppColors.textHint, fontSize: 11),
+                          color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 11),
                     ),
                   ],
                 ),
@@ -118,7 +118,7 @@ class TransferSuccessScreen extends StatelessWidget {
                     AppRoutes.home,
                     (route) => false,
                   ),
-                  child: const Text('Kembali ke Beranda'),
+                  child: Text('Kembali ke Beranda'),
                 ),
               ),
             ],

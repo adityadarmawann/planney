@@ -5,6 +5,8 @@ enum TransactionType {
   transferIn,
   transferOut,
   bankTransfer,
+  qrisPayment,
+  qrisPaylater,
   paylaterDisbursement,
   paylaterPayment,
   withdrawal,
@@ -42,23 +44,28 @@ class TransactionModel {
   });
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) {
+    final metadata = json['metadata'] as Map<String, dynamic>?;
     return TransactionModel(
       id: json['id'] as String,
       senderId: json['sender_id'] as String?,
       receiverId: json['receiver_id'] as String?,
       walletId: json['wallet_id'] as String,
-      type: _parseType(json['type'] as String),
+      type: _parseType(json['type'] as String, metadata),
       amount: (json['amount'] as num).toDouble(),
       fee: (json['fee'] as num? ?? 0).toDouble(),
       status: _parseStatus(json['status'] as String? ?? 'success'),
       note: json['note'] as String?,
       refCode: json['ref_code'] as String,
-      metadata: json['metadata'] as Map<String, dynamic>?,
+      metadata: metadata,
       createdAt: DateTime.parse(json['created_at'] as String),
     );
   }
 
-  static TransactionType _parseType(String value) {
+  static TransactionType _parseType(
+    String value,
+    Map<String, dynamic>? metadata,
+  ) {
+    final paymentMethod = metadata?['payment_method'];
     switch (value) {
       case 'topup':
         return TransactionType.topup;
@@ -67,7 +74,14 @@ class TransactionModel {
       case 'transfer_out':
         return TransactionType.transferOut;
       case 'bank_transfer':
+        if (paymentMethod == 'qris') {
+          return TransactionType.qrisPayment;
+        }
         return TransactionType.bankTransfer;
+      case 'qris_payment':
+        return TransactionType.qrisPayment;
+      case 'qris_paylater':
+        return TransactionType.qrisPaylater;
       case 'paylater_disbursement':
         return TransactionType.paylaterDisbursement;
       case 'paylater_payment':
@@ -104,6 +118,10 @@ class TransactionModel {
         return 'transfer_out';
       case TransactionType.bankTransfer:
         return 'bank_transfer';
+      case TransactionType.qrisPayment:
+        return 'qris_payment';
+      case TransactionType.qrisPaylater:
+        return 'qris_paylater';
       case TransactionType.paylaterDisbursement:
         return 'paylater_disbursement';
       case TransactionType.paylaterPayment:
@@ -123,6 +141,10 @@ class TransactionModel {
         return 'Transfer Keluar';
       case TransactionType.bankTransfer:
         return 'Transfer Bank';
+      case TransactionType.qrisPayment:
+        return 'Pembayaran QRIS';
+      case TransactionType.qrisPaylater:
+        return 'QRIS via PayLater';
       case TransactionType.paylaterDisbursement:
         return 'Cairkan Paylater';
       case TransactionType.paylaterPayment:
@@ -130,6 +152,11 @@ class TransactionModel {
       case TransactionType.withdrawal:
         return 'Penarikan';
     }
+  }
+
+  String? get merchantName {
+    final merchant = metadata?['merchant_name'];
+    return merchant is String && merchant.trim().isNotEmpty ? merchant.trim() : null;
   }
 
   bool get isCredit {

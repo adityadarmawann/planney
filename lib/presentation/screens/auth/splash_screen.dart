@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../providers/auth_provider.dart';
@@ -71,61 +71,96 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: Center(
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            return FadeTransition(
-              opacity: _fadeAnimation,
-              child: ScaleTransition(
-                scale: _scaleAnimation,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 140,
-                      height: 140,
-                      padding: const EdgeInsets.all(18),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(32),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.15),
-                            blurRadius: 20,
-                            offset: const Offset(0, 8),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: AppColors.primaryGradient,
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              top: -100,
+              right: -60,
+              child: Container(
+                width: 220,
+                height: 220,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.secondaryLight.withValues(alpha: 0.2),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: -120,
+              left: -40,
+              child: Container(
+                width: 240,
+                height: 240,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.primaryLighter.withValues(alpha: 0.2),
+                ),
+              ),
+            ),
+            Center(
+              child: AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: ScaleTransition(
+                      scale: _scaleAnimation,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 144,
+                            height: 144,
+                            padding: const EdgeInsets.all(18),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(34),
+                              border: Border.all(
+                                color: AppColors.secondaryLight.withValues(alpha: 0.45),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.primaryDark.withValues(alpha: 0.28),
+                                  blurRadius: 28,
+                                  offset: const Offset(0, 10),
+                                ),
+                              ],
+                            ),
+                            child: Image.asset(
+                              'assets/images/logo-planney.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          Text(
+                            'Planney',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 34,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 1,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Rencanakan uangmu dengan tenang',
+                            style: TextStyle(
+                              color: Colors.white.withValues(alpha: 0.86),
+                              fontSize: 14,
+                            ),
                           ),
                         ],
                       ),
-                      child: Image.asset(
-                        'assets/images/logo-planney.png',
-                        fit: BoxFit.contain,
-                      ),
                     ),
-                    const SizedBox(height: 24),
-                    const Text(
-                      'Planney',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Rencanakan uangmu dengan tenang',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
-            );
-          },
+            ),
+          ],
         ),
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../data/models/user_model.dart';
 import '../../../providers/auth_provider.dart';
@@ -29,7 +29,7 @@ class TransferScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dompet'),
+        title: Text('Transfer & Dompet'),
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -43,19 +43,19 @@ class TransferScreen extends StatelessWidget {
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 gradient: AppColors.cardGradient,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(24),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.shadow,
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
+                    color: AppColors.primaryDark.withValues(alpha: 0.18),
+                    blurRadius: 18,
+                    offset: const Offset(0, 8),
                   ),
                 ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Saldo Tersedia',
                     style: TextStyle(
                       color: Colors.white70,
@@ -66,11 +66,19 @@ class TransferScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   Text(
                     CurrencyFormatter.format(walletProvider.balance),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                       letterSpacing: -0.5,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Kelola top up, transfer, dan PayLater dari satu tempat',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 12,
                     ),
                   ),
                 ],
@@ -83,19 +91,19 @@ class TransferScreen extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.backgroundSecondary,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.border),
+                border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Informasi Dompet',
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 14),
@@ -131,12 +139,12 @@ class TransferScreen extends StatelessWidget {
             const SizedBox(height: 16),
 
             // 4. Transfer Menu (User & Bank)
-            const Text(
+            Text(
               'Transfer',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 14),
@@ -147,7 +155,7 @@ class TransferScreen extends StatelessWidget {
                     icon: Icons.person_outline,
                     title: 'Pengguna',
                     subtitle: 'Transfer ke user lain',
-                    color: AppColors.primary,
+                    color: AppColors.secondary,
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -180,7 +188,7 @@ class TransferScreen extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.backgroundSecondary,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: AppColors.secondary.withValues(alpha: 0.3)),
               ),
@@ -193,34 +201,34 @@ class TransferScreen extends StatelessWidget {
                       color: AppColors.secondary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(Icons.credit_card, color: AppColors.secondary),
+                    child: Icon(Icons.credit_card, color: AppColors.secondary),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'PayLater',
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimary,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
-                        const Text(
+                        Text(
                           'Lihat tagihan dan kelola PayLater',
                           style: TextStyle(
                             fontSize: 12,
-                            color: AppColors.textSecondary,
+                            color: Theme.of(context).colorScheme.onSurfaceVariant,
                           ),
                         ),
                       ],
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios,
-                        size: 16, color: AppColors.textSecondary),
+                    icon: Icon(Icons.arrow_forward_ios,
+                        size: 16, color: Theme.of(context).colorScheme.onSurfaceVariant),
                     onPressed: () =>
                         Navigator.pushNamed(context, AppRoutes.paylater),
                   ),
@@ -248,17 +256,17 @@ class _InfoRow extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 12,
-            color: AppColors.textSecondary,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
       ],
@@ -289,9 +297,9 @@ class _TransferCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.backgroundSecondary,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: AppColors.border),
+          border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
           boxShadow: [
             BoxShadow(
               color: color.withValues(alpha: 0.08),
@@ -314,19 +322,19 @@ class _TransferCard extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 4),
             Text(
               subtitle,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 11,
-                color: AppColors.textSecondary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),
@@ -479,9 +487,9 @@ class _UserTransferScreenState extends State<_UserTransferScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Transfer ke Pengguna'),
+        title: Text('Transfer ke Pengguna'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -490,7 +498,7 @@ class _UserTransferScreenState extends State<_UserTransferScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Username Penerima',
+          Text('Username Penerima',
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
           const SizedBox(height: 8),
           Row(
@@ -502,7 +510,6 @@ class _UserTransferScreenState extends State<_UserTransferScreen> {
                     prefixText: '@',
                     hintText: 'username_penerima',
                     filled: true,
-                    fillColor: AppColors.backgroundSecondary,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: AppColors.border),
@@ -513,7 +520,7 @@ class _UserTransferScreenState extends State<_UserTransferScreen> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: AppColors.primary),
+                      borderSide: const BorderSide(color: AppColors.secondary),
                     ),
                   ),
                 ),
@@ -531,7 +538,7 @@ class _UserTransferScreenState extends State<_UserTransferScreen> {
                         height: 18,
                         child: CircularProgressIndicator(
                             strokeWidth: 2, color: Colors.white))
-                    : const Icon(Icons.search),
+                    : Icon(Icons.search),
               ),
             ],
           ),
@@ -547,10 +554,10 @@ class _UserTransferScreenState extends State<_UserTransferScreen> {
                 children: [
                   CircleAvatar(
                     radius: 20,
-                    backgroundColor: AppColors.primaryLightest,
+                    backgroundColor: AppColors.secondaryLight.withValues(alpha: 0.3),
                     child: Text(
                       _recipient!.fullName[0].toUpperCase(),
-                      style: const TextStyle(color: AppColors.primary),
+                      style: TextStyle(color: AppColors.secondary),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -558,20 +565,20 @@ class _UserTransferScreenState extends State<_UserTransferScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(_recipient!.fullName,
-                          style: const TextStyle(fontWeight: FontWeight.w600)),
+                          style: TextStyle(fontWeight: FontWeight.w600)),
                       Text('@${_recipient!.username}',
-                          style: const TextStyle(
-                              color: AppColors.textSecondary, fontSize: 12)),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 12)),
                     ],
                   ),
                   const Spacer(),
-                  const Icon(Icons.check_circle, color: AppColors.success),
+                  Icon(Icons.check_circle, color: AppColors.success),
                 ],
               ),
             ),
           ],
           const SizedBox(height: 20),
-          const Text('Jumlah Transfer',
+          Text('Jumlah Transfer',
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
           const SizedBox(height: 8),
           TextFormField(
@@ -581,7 +588,6 @@ class _UserTransferScreenState extends State<_UserTransferScreen> {
               prefixText: 'Rp ',
               hintText: '0',
               filled: true,
-              fillColor: AppColors.backgroundSecondary,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(color: AppColors.border),
@@ -592,7 +598,7 @@ class _UserTransferScreenState extends State<_UserTransferScreen> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: AppColors.primary),
+                borderSide: const BorderSide(color: AppColors.secondary),
               ),
             ),
           ),
@@ -630,15 +636,15 @@ class _BankTransferScreenState extends State<_BankTransferScreen> {
   final _amountController = TextEditingController();
   final _noteController = TextEditingController();
 
-  final List<Map<String, String>> _banks = [
-    {'name': 'BCA', 'icon': '🏦'},
-    {'name': 'BNI', 'icon': '🏛️'},
-    {'name': 'BRI', 'icon': '🏧'},
-    {'name': 'Mandiri', 'icon': '💳'},
-    {'name': 'CIMB Niaga', 'icon': '🏦'},
-    {'name': 'Danamon', 'icon': '🏦'},
-    {'name': 'BTN', 'icon': '🏠'},
-    {'name': 'BSI', 'icon': '🕌'},
+  final List<Map<String, dynamic>> _banks = [
+    {'name': 'BCA', 'icon': Icons.account_balance},
+    {'name': 'BNI', 'icon': Icons.account_balance_wallet},
+    {'name': 'BRI', 'icon': Icons.storefront},
+    {'name': 'Mandiri', 'icon': Icons.credit_card},
+    {'name': 'CIMB Niaga', 'icon': Icons.account_balance},
+    {'name': 'Danamon', 'icon': Icons.account_balance},
+    {'name': 'BTN', 'icon': Icons.home_work_outlined},
+    {'name': 'BSI', 'icon': Icons.mosque_outlined},
   ];
 
   @override
@@ -705,9 +711,9 @@ class _BankTransferScreenState extends State<_BankTransferScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Transfer ke Bank'),
+        title: Text('Transfer ke Bank'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -717,7 +723,7 @@ class _BankTransferScreenState extends State<_BankTransferScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 20),
-          const Text('Pilih Bank',
+          Text('Pilih Bank',
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
           const SizedBox(height: 12),
           GridView.builder(
@@ -738,17 +744,23 @@ class _BankTransferScreenState extends State<_BankTransferScreen> {
                 child: Container(
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? AppColors.primaryLightest
-                        : AppColors.backgroundSecondary,
+                        ? AppColors.secondaryLight.withValues(alpha: 0.22)
+                        : Theme.of(context).colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                      color: isSelected ? AppColors.primary : AppColors.border,
+                      color: isSelected ? AppColors.secondary : AppColors.border,
                     ),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(bank['icon']!, style: const TextStyle(fontSize: 20)),
+                      Icon(
+                        bank['icon'] as IconData,
+                        size: 24,
+                        color: isSelected
+                            ? AppColors.secondary
+                            : Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                       const SizedBox(height: 4),
                       Text(
                         bank['name']!,
@@ -756,7 +768,7 @@ class _BankTransferScreenState extends State<_BankTransferScreen> {
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
                           color: isSelected
-                              ? AppColors.primary
+                              ? AppColors.secondary
                               : AppColors.textSecondary,
                         ),
                       ),
@@ -773,7 +785,7 @@ class _BankTransferScreenState extends State<_BankTransferScreen> {
             controller: _accountController,
             keyboardType: TextInputType.number,
             prefix:
-                const Icon(Icons.credit_card, color: AppColors.textHint),
+                Icon(Icons.credit_card, color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
           const SizedBox(height: 16),
           TextFormField(
@@ -784,7 +796,6 @@ class _BankTransferScreenState extends State<_BankTransferScreen> {
               prefixText: 'Rp ',
               hintText: '0',
               filled: true,
-              fillColor: AppColors.backgroundSecondary,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(color: AppColors.border),
@@ -795,7 +806,7 @@ class _BankTransferScreenState extends State<_BankTransferScreen> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: AppColors.primary),
+                borderSide: const BorderSide(color: AppColors.secondary),
               ),
               helperText: 'Biaya admin: ${CurrencyFormatter.format(_adminFee)}',
             ),
